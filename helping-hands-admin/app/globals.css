@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -16,8 +17,14 @@
   }
 }
 
+
+
 body {
  
+}
+
+.apexcharts-toolbar {
+  display: none !important;
 }
 
 @layer utilities {

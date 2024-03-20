@@ -58,7 +58,7 @@ const menuItems = [
 
 function Sidebar() {
   const currentRoute = usePathname();
-  console.log(currentRoute);
+
   return (
     <SidebarContainer className="bg-blue_400 h-screen flex flex-col">
       <div className="mx-auto w-fit">
