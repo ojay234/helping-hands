@@ -484,3 +484,86 @@ export const adminData = [
     phone_number: "+1-2345-678-901",
   },
 ];
+
+export const historyColumns = [
+  {
+    Header: "Date",
+    accessor: "date",
+  },
+  {
+    Header: "Customer Name",
+    accessor: "name",
+  },
+  {
+    Header: "Description",
+    accessor: "description",
+  },
+  {
+    Header: "Status",
+    accessor: "status",
+  },
+
+  {
+    Header: "Amount",
+    accessor: "amount",
+  },
+];
+
+export const historyData = [
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "+$10.25",
+  },
+  {
+    date: "28/01/23",
+    name: "Isaac Adenuga",
+    description: "Payment for pickup service",
+    status: "Pending",
+    amount: "-$10.25",
+  },
+];

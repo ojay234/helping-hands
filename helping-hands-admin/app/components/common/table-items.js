@@ -19,6 +19,18 @@ export function boldText(text) {
   return <span className="font-bold">{text}</span>;
 }
 
+export function formatAmount(amount) {
+  return (
+    <span
+      className={`${
+        amount.includes("+") ? "text-green_600" : "text-red_500"
+      } font-bold`}
+    >
+      {amount}
+    </span>
+  );
+}
+
 export function deleteAction(index) {
   return (
     <span className="text-right cursor-pointer">
