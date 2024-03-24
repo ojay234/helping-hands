@@ -18,6 +18,7 @@ function AreaChart() {
     stroke: {
       curve: "smooth",
       width: [3, 3],
+      colors: ["#8D79F6", "#F25F33"],
     },
     legend: {
       position: "top",
@@ -34,7 +35,7 @@ function AreaChart() {
         type: "area",
         name: "Total Users",
         data: [1800, 2500, 2000, 3200, 3800, 3000, 2200],
-        color: "#F25F33",
+        color: "#f5d4d4",
       },
     ],
     grid: {
@@ -52,14 +53,10 @@ function AreaChart() {
       },
     },
     fill: {
-      type: "gradient",
+      type: "solid",
       gradient: {
         shade: "light",
         type: "vertical",
-        shadeIntensity: 0.8,
-        opacityFrom: 1,
-        opacityTo: 0,
-        stops: [0, 100],
       },
     },
     xaxis: {
