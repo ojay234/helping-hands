@@ -11,21 +11,21 @@ function DashboardInfo() {
         date="This month"
       />
       <CardInfo
-        title="Total Dist. Traveled"
-        figure="250km"
-        percentage="-30%"
+        title="Total Delivery Time"
+        figure="36h 45m"
+        percentage="-15%"
         date="This month"
       />
       <CardInfo
-        title="Total Dist. Traveled"
-        figure="250km"
-        percentage="+30%"
+        title="Total Review"
+        figure="210"
+        percentage="+2%"
         date="This month"
       />
       <CardInfo
-        title="Total Dist. Traveled"
-        figure="250km"
-        percentage="+30%"
+        title="Total Rating"
+        figure="4.75"
+        percentage="-1.5%"
         date="This month"
       />
     </div>

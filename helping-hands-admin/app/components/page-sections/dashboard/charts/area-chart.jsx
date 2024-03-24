@@ -1,6 +1,10 @@
 "use client";
+import dynamic from "next/dynamic";
 
-import ReactApexChart from "react-apexcharts";
+// Dynamically import ApexCharts to avoid SSR issues
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 function AreaChart() {
   const chartOptions = {
@@ -13,12 +17,12 @@ function AreaChart() {
     },
     stroke: {
       curve: "smooth",
-      width: [3, 3], 
+      width: [3, 3],
     },
     legend: {
       position: "top",
     },
-   
+
     series: [
       {
         name: "Unique Users",

@@ -1,5 +1,10 @@
 "use client";
-import ReactApexChart from "react-apexcharts";
+import dynamic from "next/dynamic";
+
+// Dynamically import ApexCharts to avoid SSR issues
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 function PieChart() {
   const chartOptions = {

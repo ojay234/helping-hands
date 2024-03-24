@@ -8,7 +8,7 @@ import {
   InfoTable,
 } from "@components/page-sections/dashboard/dashboard-tables";
 
-function Dashboard() {
+function page() {
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">
       <Header title="Dashboard" />
@@ -29,4 +29,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default page;
