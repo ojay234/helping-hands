@@ -442,3 +442,45 @@ export const customerData = [
     amount: "+$10.25",
   },
 ];
+
+export const adminColumns = [
+  {
+    Header: "S/N",
+    accessor: "serial_no",
+  },
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Email Address",
+    accessor: "email",
+  },
+  {
+    Header: "Phone Number",
+    accessor: "phone_number",
+  },
+
+  {
+    Header: "Action",
+    accessor: "action",
+  },
+];
+
+export const adminData = [
+  {
+    name: "Isaac Adenuga",
+    email: "isaacade@gmail.com",
+    phone_number: "+1-2345-678-901",
+  },
+  {
+    name: "Isaac Adenuga",
+    email: "isaacade@gmail.com",
+    phone_number: "+1-2345-678-901",
+  },
+  {
+    name: "Isaac Adenuga",
+    email: "isaacade@gmail.com",
+    phone_number: "+1-2345-678-901",
+  },
+];
