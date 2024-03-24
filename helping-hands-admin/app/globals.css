@@ -27,6 +27,12 @@ body {
   display: none !important;
 }
 
+
+.ant-modal-body {
+  margin: 20px auto;
+  width: fit-content;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -59,8 +59,10 @@ const menuItems = [
 function Sidebar() {
   const currentRoute = usePathname();
 
+  console.log(currentRoute);
+
   return (
-    <SidebarContainer className="bg-blue_400 h-screen flex flex-col">
+    <SidebarContainer className="bg-blue_400 h-screen flex flex-col w-[18vw] fixed">
       <div className="mx-auto w-fit">
         <Image src={logo} alt="logo" width={80} height={50} />
       </div>
@@ -69,14 +71,16 @@ function Sidebar() {
           <li
             key={index}
             className={`${
-              currentRoute === item.path ? "bg-blue_800" : "bg-transparent "
+              currentRoute.includes(item.path)
+                ? "bg-blue_800"
+                : "bg-transparent "
             } text-white rounded-lg my-2`}
           >
             <Link
               href={item.path}
               className="flex gap-2 py-2 px-3 items-center"
             >
-              {currentRoute === item.path ? (
+              {currentRoute.includes(item.path) ? (
                 <Image
                   src={item.activeIcon}
                   width={24}
@@ -102,8 +106,6 @@ function Sidebar() {
 }
 
 const SidebarContainer = styled.div`
-  position: fixed;
-  width: 18vw;
   padding: 20px 10px;
   margin: 0;
   gap: 60px;

@@ -2,7 +2,7 @@ import React from "react";
 import { useTable } from "react-table";
 import styled from "styled-components";
 
-function Table({ columns, data }) {
+function Table({ columns, data, styledHeader, onRowClick }) {
   // Create a table instance using the useTable hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -14,7 +14,7 @@ function Table({ columns, data }) {
   return (
     <TableContainer>
       <table {...getTableProps()}>
-        <thead>
+        <thead className={`${styledHeader && "bg-gray_100"}`}>
           {headerGroups.map((headerGroup, index) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
@@ -29,7 +29,12 @@ function Table({ columns, data }) {
           {rows.map((row, index) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} key={index}>
+              <tr
+                {...row.getRowProps()}
+                key={index}
+                onClick={() => onRowClick && onRowClick(row.original)}
+                style={{ cursor: onRowClick && "pointer" }}
+              >
                 {row.cells.map((cell, index) => {
                   return (
                     <td {...cell.getCellProps()} key={index}>
@@ -59,8 +64,9 @@ const TableContainer = styled.div`
 
     tr {
       border-bottom: 1px solid #cdcdcd80;
-      
-      td, th {
+
+      td,
+      th {
         padding: 16px 4px;
         text-align: center;
       }

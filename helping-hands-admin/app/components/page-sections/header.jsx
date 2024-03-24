@@ -1,4 +1,3 @@
-"use client";
 import styled from "styled-components";
 import CustomButton from "@components/common/custom-button";
 

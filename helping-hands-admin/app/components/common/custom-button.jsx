@@ -1,15 +1,16 @@
+"use client";
 import React from "react";
 import styled from "styled-components";
 import MiniLoader from "./mini-loader";
 
 function CustomButton({
   children,
-  primary,
+  primary = true,
   width,
   clicked,
   type,
-  disabled,
-  btnLoading,
+  disabled = false,
+  btnLoading = false,
 }) {
   return (
     <StyledButton

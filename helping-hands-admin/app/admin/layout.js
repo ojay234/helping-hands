@@ -1,6 +1,4 @@
-import Header from "../components/page-sections/header";
 import Sidebar from "../components/layout/sidebar";
-
 export default function RootLayout({ children }) {
   return (
     <section className="flex relative text-black_400">

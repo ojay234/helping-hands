@@ -7,37 +7,30 @@ function AreaChart() {
     // Define your chart options here
     chart: {
       id: "user area chart",
-      type: "area",
     },
     toolbar: {
       show: false,
-      tools: {
-        download: true,
-        selection: false,
-        zoom: false,
-        zoomin: false,
-        zoomout: false,
-        pan: false,
-      },
     },
     stroke: {
       curve: "smooth",
+      width: [3, 3], 
     },
     legend: {
       position: "top",
     },
+   
     series: [
+      {
+        name: "Unique Users",
+        data: [2900, 3200, 2600, 3500, 2800, 3200, 2700],
+        type: "line",
+        color: "#8D79F6",
+      },
       {
         type: "area",
         name: "Total Users",
-        data: [3000, 3500, 2800, 3200, 2500, 2900, 2300],
-
+        data: [1800, 2500, 2000, 3200, 3800, 3000, 2200],
         color: "#F25F33",
-      },
-      {
-        name: "Unique Users",
-        data: [3100, 3800, 3000, 3500, 2800, 3200, 2700],
-        color: "#8D79F6",
       },
     ],
     grid: {
@@ -59,7 +52,7 @@ function AreaChart() {
       gradient: {
         shade: "light",
         type: "vertical",
-        shadeIntensity: 0.5,
+        shadeIntensity: 0.8,
         opacityFrom: 1,
         opacityTo: 0,
         stops: [0, 100],
