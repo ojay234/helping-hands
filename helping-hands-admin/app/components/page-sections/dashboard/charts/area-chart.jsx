@@ -38,7 +38,7 @@ function AreaChart() {
       },
     ],
     grid: {
-      borderColor: " #171724",
+      borderColor: "#171724",
       strokeDashArray: 7,
       xaxis: {
         lines: {
@@ -78,6 +78,7 @@ function AreaChart() {
         series={chartOptions.series}
         type="line"
         height={350}
+        width="100%"
       />
     </div>
   );

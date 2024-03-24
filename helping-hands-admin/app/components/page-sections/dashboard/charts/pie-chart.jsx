@@ -49,6 +49,7 @@ function PieChart() {
         series={chartOptions.series}
         type="donut"
         height={300}
+        width="100%"
       />
     </div>
   );
