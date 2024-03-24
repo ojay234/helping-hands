@@ -1,8 +1,11 @@
+"use client";
+import { useLayoutEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <main>
-      <p>Login</p>
-    </main>
-  );
+  const router = useRouter();
+  useLayoutEffect(() => {
+    router.push(`/admin/dashboard`);
+  }, []);
+  return <main>{/* <p>Login</p> */}</main>;
 }
