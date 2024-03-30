@@ -36,14 +36,15 @@ function Login() {
     };
     try {
       const response = await login(loginData);
-      localStorage.setItem("auth_token", response?.data?.data?.token);
-      localStorage.setItem("id", response.data?.data?.id);
-      dispatch(setUser(response?.data?.data));
-      router.push("/admin/dashboard");
+      if (isSuccess) {
+        localStorage.setItem("auth_token", response?.data?.data?.token);
+        localStorage.setItem("id", response.data?.data?.id);
+        dispatch(setUser(response?.data?.data));
+        router.push("/admin/dashboard");
+      }
     } catch (error) {
       /*empty*/
     }
-  
   };
 
   return (

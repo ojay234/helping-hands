@@ -19,7 +19,7 @@ function Home() {
     }
   }, [user]);
   return (
-    <main>
+    <main className="bg-white ">
       <Login />
     </main>
   );
