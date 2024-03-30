@@ -1,24 +1,48 @@
-import { useMemo } from "react";
+import React, { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import Table from "@components/common/Table";
-import { orderColumns, orderData } from "@/app/data";
-import { deleteAction, formatStatusOrder } from "../../common/table-items";
+import { useGetOrderDataQuery } from "@/app/api/apiSlice";
+import { orderColumns } from "@/app/data";
+import { formatDate, formatStatusOrder } from "../../common/table-items";
 import DeleteAction from "./table-action";
 
 function OrderTable() {
+  const [pageIndex, setPageIndex] = useState(1);
+  const router = useRouter();
+
+  const { data, isLoading, isError } = useGetOrderDataQuery(pageIndex);
+
+  console.log(data);
+
   const rowData = useMemo(() => {
-    return orderData?.map((item, index) => ({
-      order_id: item.order_id,
-      name: item.name,
-      date: item.date,
-      pickup_location: item.pickup_location,
-      delivery_location: item.delivery_location,
-      status: formatStatusOrder(item.status),
-      action: <DeleteAction index={index} />,
+    return data?.data?.map((item, index) => ({
+      order_id: item.orderId,
+      order_title: item.orderTitle,
+      date: formatDate(item.orderDate),
+      order_number: item.orderNumber,
+      order_cost: item.orderCost,
     }));
-  }, []);
+  }, [data]);
+  const onPageChange = (label) => {
+    setPageIndex(label);
+  };
+
+  const handleRowClick = (row) => {
+    router.push(`/admin/orders/details?orderId=${row.order_id}`);
+  };
+
   return (
     <div className="bg-white">
-      <Table columns={orderColumns} data={rowData} styledHeader />
+      <Table
+        columns={orderColumns}
+        data={rowData || []}
+        styledHeader
+        pagination
+        paginationData={data?.meta}
+        onPageChange={onPageChange}
+        isLoading={isLoading}
+        onRowClick={handleRowClick}
+      />
     </div>
   );
 }

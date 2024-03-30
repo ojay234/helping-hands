@@ -1,56 +1,57 @@
-"use client";
-import dynamic from "next/dynamic";
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-// Dynamically import ApexCharts to avoid SSR issues
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-  ssr: false,
-});
+function PieChart({ chartData, isLoading }) {
+  const { allOrders, pendingOrders, confirmedOrders, completeOrders } =
+    chartData || {};
 
-function PieChart() {
-  const chartOptions = {
-    // Define your chart options here
-    chart: {
-      id: "order donut chart",
-      type: "donut",
-    },
-    legend: {
-      show: false,
-    },
-    toolbar: {
-      show: false,
-    },
-    series: [10, 20, 30, 50],
-    labels: ["cancelled", "confirmed", "pending", "completed"],
-    plotOptions: {
-      pie: {
-        donut: {
-          labels: {
-            show: true,
-            total: {
-              show: true,
-              showAlways: true,
-              label: "Total Orders",
-              fontSize: "26px",
-              fontWeight: 700,
-            },
-          },
-        },
+  // Calculate the total number of orders
+  const totalOrders =
+    parseInt(pendingOrders) +
+    parseInt(confirmedOrders) +
+    parseInt(completeOrders);
+
+  // Define chart data
+  const data = {
+    labels: ["Pending", "Confirmed", "Cancelled", "Completed"],
+    datasets: [
+      {
+        data: [
+          parseInt(pendingOrders),
+          parseInt(12),
+          parseInt(
+            allOrders - pendingOrders - confirmedOrders - completeOrders
+          ),
+          parseInt(completeOrders),
+        ],
+        backgroundColor: ["#FFCF64", "#6A85B8", "#FF0202", "#12B76A"],
+        borderJoinStyle: "milter",
+        spacing: 0,
+        borderWidth: [5, 30, 20, 30],
+        borderColor: ["#FFCF64", "#6A85B8", "#FF0202", "#12B76A"],
+      },
+    ],
+  };
+
+  // Define chart options
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
-    colors: ["#FF0202", "#6A85B8", "#FFCF64", "#12B76A"],
+    cutout: "70%",
   };
+
   return (
-    <div className="w-full bg-white p-4 rounded-lg">
-      <ReactApexChart
-        options={chartOptions}
-        series={chartOptions.series}
-        type="donut"
-        height={300}
-        width="100%"
-      />
+    <div className="w-fit bg-white p-4 rounded-lg h-[300px] mx-auto">
+      {isLoading ? (
+        <div className="text-sm text-center text-gray-400">loading..</div>
+      ) : (
+        <Doughnut data={data} options={options} />
+      )}
     </div>
   );
 }

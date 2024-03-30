@@ -1,9 +1,20 @@
 import React from "react";
 import { useTable } from "react-table";
 import styled from "styled-components";
+import BasicPagination from "./BasicPagination";
+import TableLoader from "./table-skeleton-loader";
 
-function Table({ columns, data, styledHeader, onRowClick }) {
-  // Create a table instance using the useTable hook
+function Table({
+  columns,
+  data,
+  styledHeader,
+  onRowClick,
+  pagination,
+  isLoading,
+  paginationData,
+  onPageChange,
+}) {
+  // Create a table instance using the useTable hook with pagination
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -13,40 +24,62 @@ function Table({ columns, data, styledHeader, onRowClick }) {
   // Render the table UI
   return (
     <TableContainer>
-      <table {...getTableProps()}>
-        <thead className={`${styledHeader && "bg-gray_100"}`}>
-          {headerGroups.map((headerGroup, index) => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <th {...column.getHeaderProps()} key={index}>
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, index) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                key={index}
-                onClick={() => onRowClick && onRowClick(row.original)}
-                style={{ cursor: onRowClick && "pointer" }}
-              >
-                {row.cells.map((cell, index) => {
-                  return (
-                    <td {...cell.getCellProps()} key={index}>
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+      <div>
+        <table {...getTableProps()}>
+          <thead className={`${styledHeader && "bg-gray_100"}`}>
+            {headerGroups.map((headerGroup, index) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column, index) => (
+                  <th {...column.getHeaderProps()} key={index}>
+                    {column.render("Header")}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {isLoading && (
+              <tr>
+                <td className="text-gray-500">loading...</td>
+              </tr>
+            )}
+
+            {rows.map((row, index) => {
+              prepareRow(row);
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  key={index}
+                  onClick={() => onRowClick && onRowClick(row.original)}
+                  style={{ cursor: onRowClick && "pointer" }}
+                >
+                  {row.cells.map((cell, index) => {
+                    return (
+                      <td {...cell.getCellProps()} key={index}>
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+            {!isLoading && data?.length === 0 && (
+              <tr>
+                <td className="text-gray-500">No Data</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        {/* Pagination controls if pagination is enabled */}
+        {pagination && data?.length !== 0 && (
+          <div>
+            <BasicPagination
+              paginationData={paginationData}
+              onPageChange={onPageChange}
+            />
+          </div>
+        )}
+      </div>
     </TableContainer>
   );
 }
@@ -71,6 +104,13 @@ const TableContainer = styled.div`
         text-align: center;
       }
     }
+  }
+
+  .empty-table {
+    margin: 10px auto;
+    text-align: center;
+    color: #818181;
+    width: fit-content;
   }
 `;
 

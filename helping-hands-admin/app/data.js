@@ -90,6 +90,29 @@ export const dasboardTableInfoData = [
 
 export const orderColumns = [
   {
+    Header: "Order ID",
+    accessor: "order_id",
+  },
+  {
+    Header: "Order Title",
+    accessor: "order_title",
+  },
+  {
+    Header: "Date",
+    accessor: "date",
+  },
+  {
+    Header: "Order Number",
+    accessor: "order_number",
+  },
+  {
+    Header: "Order Cost",
+    accessor: "order_cost",
+  },
+];
+
+export const orderDetailsColumns = [
+  {
     Header: "Order No.",
     accessor: "order_id",
   },
@@ -566,4 +589,31 @@ export const historyData = [
     status: "Pending",
     amount: "-$10.25",
   },
+];
+
+export const faqColumns = [
+  {
+    Header: "ID",
+    accessor: "id",
+  },
+  {
+    Header: "Category",
+    accessor: "category",
+  },
+  {
+    Header: "Question",
+    accessor: "question",
+  },
+  {
+    Header: "Answer",
+    accessor: "answer",
+  },
+];
+
+export const categoryOptions = [
+  { value: "usage", label: "usage" },
+  { value: "app", label: "app" },
+  { value: "about", label: "about" },
+  { value: "account", label: "account" },
+  { value: "payment", label: "payment" },
 ];

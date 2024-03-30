@@ -1,32 +1,35 @@
 import { useMemo, useState } from "react";
 import Table from "@components/common/Table";
-import { adminColumns, adminData } from "@/app/data";
-import DeleteAction from "./table-action";
-import { useGetAdminDataQuery } from "@/app/api/apiSlice";
+import { faqColumns } from "@/app/data";
+import {
+  formatAmount,
+  formatLongText,
+  formatStatus,
+} from "../../common/table-items";
+import { useGetFaqQuery } from "@/app/api/apiSlice";
 
-function ManagementTable() {
-  const [pageIndex, setPageIndex] = useState(1);
-  const { data, isLoading } = useGetAdminDataQuery(pageIndex);
+function FaqTable() {
+  const [pageIndex, setPageIndex] = useState();
+  const { data, isLoading } = useGetFaqQuery(pageIndex);
 
   console.log(data);
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
-      serial_no: index + 1,
-      name: item.name,
-      email: item.email,
-      phone_number: item.phoneNumber,
-      action: <DeleteAction index={index} />,
+      id: item.id,
+      category: item.category,
+      question: formatLongText(item.question),
+      answer: formatLongText(item.answer),
     }));
   }, [data]);
-  
+
   const onPageChange = (label) => {
+   
     setPageIndex(label);
   };
-
   return (
     <div className="bg-white">
       <Table
-        columns={adminColumns}
+        columns={faqColumns}
         data={rowData || []}
         styledHeader
         pagination
@@ -38,4 +41,4 @@ function ManagementTable() {
   );
 }
 
-export default ManagementTable;
+export default FaqTable;
