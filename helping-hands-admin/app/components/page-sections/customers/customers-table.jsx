@@ -10,9 +10,11 @@ function CustomersTable() {
   const [pageIndex, setPageIndex] = useState(1);
   const router = useRouter();
 
-  const { data, isLoading } = useGetCustomerDataQuery(pageIndex);
+  const { data, isLoading, refetch } = useGetCustomerDataQuery(pageIndex);
 
-  console.log(data);
+  const refetchData = () => {
+    refetch();
+  };
 
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
@@ -21,11 +23,11 @@ function CustomersTable() {
       date: formatDate(item.createdAt),
       email: item.email,
       phone_number: item.phoneNumber,
-      action: <DeleteAction index={item.userId} />,
+      action: <DeleteAction id={item.userId} refetchData={refetchData} />,
     }));
   }, [data]);
 
-  const handleRowClick = (row) => {
+  const handleRowClick = (event, row) => {
     router.push(
       `/admin/customers/orders?userId=${row.user_id}&userName=${row.name}`
     );
@@ -52,3 +54,5 @@ function CustomersTable() {
 }
 
 export default CustomersTable;
+
+

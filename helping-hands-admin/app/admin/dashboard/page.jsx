@@ -12,23 +12,36 @@ import {
   InfoTable,
 } from "@components/page-sections/dashboard/dashboard-tables";
 import Link from "next/link";
+import { useState } from "react";
 
 function Dashboard() {
-  const { data, isLoading: dashboardDataLoading } = useGetDashboardDataQuery();
+  const [filter, setFilter] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+  const { data, isLoading: dashboardDataLoading } =
+    useGetDashboardDataQuery(filter);
   const { data: homeStatistics, isLoading: homeStatisticLoading } =
     useGetHomeStatisticQuery();
 
-  console.log(homeStatistics);
+  const handleFilter = (from, to) => {
+    setFilter(`filter[date][from]=${from}&filter[date][to]=${to}`);
+    setFilterDate(`${from} to ${to}`);
+    console.log(from, to, "testing");
+  };
+
+
 
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">
-      <Header title="Dashboard" />
+      <Header title="Dashboard" filter handleFilter={handleFilter} />
       <div className="flex justify-between">
-        <div className="grid gap-4 w-[58%]">
-          <DashboardInfo statistic={data?.data?.performanceStatistic} />
+        <div className="grid gap-8 w-[56%]">
+          <DashboardInfo
+            statistic={data?.data?.performanceStatistic}
+            filterDate={filterDate}
+          />
           <AreaChart />
         </div>
-        <div className="grid gap-4 w-[38%] bg-white custom-shadow rounded-lg">
+        <div className="grid gap-4 w-[38%] bg-white custom-shadow rounded-[12px]">
           <PieChart
             chartData={homeStatistics?.data}
             isLoading={homeStatisticLoading}
@@ -42,7 +55,7 @@ function Dashboard() {
           </Link>
         </div>
       </div>
-      <div className="custom-shadow rounded-lg">
+      <div className="custom-shadow  ">
         <InfoTable
           rowData={data?.data?.topDistrictSummary}
           isLoading={dashboardDataLoading}

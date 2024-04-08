@@ -1,7 +1,7 @@
 import React from "react";
 import CardInfo from "./card-info";
 
-function DashboardInfo({ statistic }) {
+function DashboardInfo({ statistic, filterDate }) {
   const {
     totalDistanceTravelledStatistic,
     totalRatingStatistic,
@@ -23,7 +23,7 @@ function DashboardInfo({ statistic }) {
             ? `${totalDistanceTravelledStatistic?.percentageDifference}%`
             : `_`
         }
-        date="This month"
+        date={filterDate ? filterDate : "This month"}
       />
       <CardInfo
         title="Total Delivery Time"
@@ -35,7 +35,7 @@ function DashboardInfo({ statistic }) {
             ? `${totalRevenueStatistic?.percentageDifference}%`
             : `_`
         }
-        date="This month"
+        date={filterDate ? filterDate : "This month"}
       />
       <CardInfo
         title="Total Review"
@@ -47,7 +47,7 @@ function DashboardInfo({ statistic }) {
             ? `${totalReviewStatistic?.percentageDifference}%`
             : `_`
         }
-        date="This month"
+        date={filterDate ? filterDate : "This month"}
       />
       <CardInfo
         title="Total Rating"
@@ -59,7 +59,7 @@ function DashboardInfo({ statistic }) {
             ? `${totalRatingStatistic?.percentageDifference}%`
             : `_`
         }
-        date="This month"
+        date={filterDate ? filterDate : "This month"}
       />
     </div>
   );

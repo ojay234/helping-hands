@@ -52,6 +52,7 @@ function Table({
                   key={index}
                   onClick={() => onRowClick && onRowClick(row.original)}
                   style={{ cursor: onRowClick && "pointer" }}
+                  className={`${onRowClick && "hover:bg-gray-100"}`}
                 >
                   {row.cells.map((cell, index) => {
                     return (

@@ -41,6 +41,22 @@ export function formatDate(dateString) {
   return <span>{formattedDate}</span>;
 }
 
+export function formatTimeStampDate(dateString) {
+  const milliseconds = dateString * 1000;
+
+  // Create a new Date object
+  const dateObject = new Date(milliseconds);
+
+  // Extract year, month, and day from the date object
+  const year = dateObject.getFullYear();
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed, so add 1
+  const day = dateObject.getDate().toString().padStart(2, "0");
+
+  // Format the date as "yyyy-mm-dd"
+  const formattedDate = `${year}-${month}-${day}`;
+  return <span>{formattedDate}</span>;
+}
+
 export function deleteAction(index) {
   return (
     <span className="text-right cursor-pointer">
@@ -56,7 +72,7 @@ export function deleteAction(index) {
 }
 
 export function formatLongText(text) {
-  return <LongTextContainer >{text}</LongTextContainer>;
+  return <LongTextContainer>{text}</LongTextContainer>;
 }
 
 const LongTextContainer = styled.div`

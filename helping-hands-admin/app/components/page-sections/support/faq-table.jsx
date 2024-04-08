@@ -6,11 +6,9 @@ import {
   formatLongText,
   formatStatus,
 } from "../../common/table-items";
-import { useGetFaqQuery } from "@/app/api/apiSlice";
 
-function FaqTable() {
-  const [pageIndex, setPageIndex] = useState();
-  const { data, isLoading } = useGetFaqQuery(pageIndex);
+function FaqTable({ data, isLoading, onPageChange }) {
+
 
   console.log(data);
   const rowData = useMemo(() => {
@@ -22,10 +20,7 @@ function FaqTable() {
     }));
   }, [data]);
 
-  const onPageChange = (label) => {
-   
-    setPageIndex(label);
-  };
+
   return (
     <div className="bg-white">
       <Table

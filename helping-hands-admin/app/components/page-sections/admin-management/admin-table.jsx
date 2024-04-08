@@ -18,7 +18,7 @@ function ManagementTable() {
       action: <DeleteAction index={index} />,
     }));
   }, [data]);
-  
+
   const onPageChange = (label) => {
     setPageIndex(label);
   };

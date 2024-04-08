@@ -513,10 +513,7 @@ export const historyColumns = [
     Header: "Date",
     accessor: "date",
   },
-  {
-    Header: "Customer Name",
-    accessor: "name",
-  },
+
   {
     Header: "Description",
     accessor: "description",

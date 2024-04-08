@@ -1,4 +1,3 @@
-
 import { Jost } from "next/font/google";
 import { Providers } from "./store/provider";
 import "./globals.css";

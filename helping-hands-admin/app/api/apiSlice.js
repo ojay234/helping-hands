@@ -24,22 +24,21 @@ const api = createApi({
         body,
       }),
     }),
-    register: builder.mutation({
-      query: (body) => ({
-        url: "/auth/register",
+    verifyPayment: builder.mutation({
+      query: (intent) => ({
+        url: `/payment-gateway/stripe/${intent}/verify`,
         method: "POST",
-        body,
       }),
     }),
     getDashboardData: builder.query({
-      query: () => ({
-        url: "/v1/manager/dashboard",
+      query: (filter) => ({
+        url: `/v1/manager/dashboard?${filter}`,
         method: "GET",
       }),
     }),
     getOrderData: builder.query({
-      query: (pageNumber) => ({
-        url: `/v1/manager/orders?page=${pageNumber}`,
+      query: ({ pageIndex, filter }) => ({
+        url: `/v1/manager/orders?page=${pageIndex}${filter}`,
         method: "GET",
       }),
     }),
@@ -128,7 +127,7 @@ const api = createApi({
 
 export const {
   useLoginMutation,
-  useRegisterMutation,
+  useVerifyPaymentMutation,
   useGetDashboardDataQuery,
   useGetOrderDataQuery,
   useGetOrderDetailsQuery,

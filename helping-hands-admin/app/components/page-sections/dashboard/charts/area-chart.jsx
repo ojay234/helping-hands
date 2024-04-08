@@ -11,6 +11,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,7 +25,7 @@ ChartJS.register(
 
 function AreaChart() {
   const chartData = {
-    labels: ["1", "2", "3", "4", "5", "6", "7"],
+    labels: ["1", "2", "3", "4", "5", "6"],
     datasets: [
       {
         label: "Unique Users",
@@ -32,6 +33,7 @@ function AreaChart() {
         fill: false,
         borderColor: "#8D79F6",
         tension: 0.4,
+        pointRadius: 0, // Hide points
       },
       {
         label: "Total Users",
@@ -40,6 +42,7 @@ function AreaChart() {
         backgroundColor: "#ffd0c2",
         borderColor: "#F25F33",
         tension: 0.4,
+        pointRadius: 0, // Hide points
       },
     ],
   };
@@ -55,11 +58,25 @@ function AreaChart() {
         },
       },
     },
+    plugins: {
+      legend: {
+        display: false, // Hide legend
+      },
+    },
   };
 
   return (
-    <div className="w-full bg-white p-4 rounded-lg h-[350px]">
-      <Line data={chartData} options={chartOptions} />
+    <div className="w-full bg-white p-4 rounded-[12px] ">
+      <div className="flex justify-between mt-2 mb-4">
+        <h1 className="font-bold">User Retention</h1>
+        <p className="flex items-center gap-2 text-sm">
+          <span className="bg-[#F25F33] h-3 w-3 rounded-full" />
+          <span>Total Users</span>
+        </p>
+      </div>
+      <div className="">
+        <Line data={chartData} options={chartOptions} />
+      </div>
     </div>
   );
 }

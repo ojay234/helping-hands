@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Table from "@components/common/Table";
 import { useGetOrderDataQuery } from "@/app/api/apiSlice";
@@ -6,13 +6,10 @@ import { orderColumns } from "@/app/data";
 import { formatDate, formatStatusOrder } from "../../common/table-items";
 import DeleteAction from "./table-action";
 
-function OrderTable() {
-  const [pageIndex, setPageIndex] = useState(1);
+function OrderTable({data, isLoading, onPageChange}) {
+
   const router = useRouter();
 
-  const { data, isLoading, isError } = useGetOrderDataQuery(pageIndex);
-
-  console.log(data);
 
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
@@ -23,9 +20,7 @@ function OrderTable() {
       order_cost: item.orderCost,
     }));
   }, [data]);
-  const onPageChange = (label) => {
-    setPageIndex(label);
-  };
+
 
   const handleRowClick = (row) => {
     router.push(`/admin/orders/details?orderId=${row.order_id}`);

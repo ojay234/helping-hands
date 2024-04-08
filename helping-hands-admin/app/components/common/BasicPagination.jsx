@@ -80,7 +80,6 @@ const BasicPagination = ({ paginationData, onPageChange }) => {
         {/* Previous button */}
         <li className={`${current_page === 1 ? "disabled-btn" : "page-btn"}`}>
           <span
-          
             onClick={(e) => {
               handlePageChange(current_page - 1);
             }}

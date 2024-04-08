@@ -33,7 +33,7 @@ export function InfoTable({ rowData, isLoading }) {
     }));
   }, [rowData]);
   return (
-    <div className="bg-white">
+    <div className="bg-white  rounded-[12px]">
       <Table
         columns={dashboardTableInfoColumn}
         data={dashboardRowData || []}

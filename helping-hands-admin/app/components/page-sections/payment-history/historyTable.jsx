@@ -5,7 +5,11 @@ import {
   historyColumns,
   historyData,
 } from "@/app/data";
-import { formatAmount, formatStatus } from "../../common/table-items";
+import {
+  formatAmount,
+  formatStatus,
+  formatTimeStampDate,
+} from "../../common/table-items";
 import { useGetWalletHistoryQuery } from "@/app/api/apiSlice";
 
 function HistoryTable() {
@@ -15,8 +19,7 @@ function HistoryTable() {
   console.log(data);
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
-      // date: item.date,
-      // name: item.name,
+      date: formatTimeStampDate(item.created),
       description: item.description,
       status: formatStatus(item.status),
       amount: formatAmount(`${item.amount}`),

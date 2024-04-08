@@ -36,7 +36,8 @@ function Login() {
     };
     try {
       const response = await login(loginData);
-      if (isSuccess) {
+      console.log(response);
+      if (response.data && response.data.data.token) {
         localStorage.setItem("auth_token", response?.data?.data?.token);
         localStorage.setItem("id", response.data?.data?.id);
         dispatch(setUser(response?.data?.data));
@@ -44,6 +45,7 @@ function Login() {
       }
     } catch (error) {
       /*empty*/
+      console.log(error);
     }
   };
 
@@ -103,7 +105,7 @@ const LoginContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
+  padding-top: 60px;
   h1 {
     text-align: center;
     font-weight: 700;

@@ -13,11 +13,17 @@ import CustomTextarea from "@/app/components/common/custom-textarea";
 import FaqTable from "@/app/components/page-sections/support/faq-table";
 import CustomSelect from "@/app/components/common/custom-select";
 import { TbCategory } from "react-icons/tb";
-import { useCreateFaqMutation } from "@/app/api/apiSlice";
+import { useCreateFaqMutation, useGetFaqQuery } from "@/app/api/apiSlice";
 import * as Yup from "yup";
 
 function Support() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [pageIndex, setPageIndex] = useState(1);
+  const {
+    data,
+    isLoading: isFaqDataLoading,
+    refetch,
+  } = useGetFaqQuery(pageIndex);
   const [createFaq, { isLoading, isError }] = useCreateFaqMutation();
 
   function showModal() {
@@ -43,17 +49,27 @@ function Support() {
   const submitFaq = async (values) => {
     try {
       const response = await createFaq(values);
-      console.log(response);
+      setModalVisible(false);
+      refetch();
+      setPageIndex(1);
     } catch (err) {
       console.log(error);
     }
+  };
+
+  const onPageChange = (label) => {
+    setPageIndex(label);
   };
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">
       <Header title="Support" />
       <div className="bg-white py-5 rounded-lg px-5 min-h-[85vh]">
         <div>
-          <FaqTable />
+          <FaqTable
+            data={data}
+            isLoading={isFaqDataLoading}
+            onPageChange={onPageChange}
+          />
         </div>
         <div className="max-w-[200px] my-8 mx-auto">
           <CustomButton primary clicked={showModal}>

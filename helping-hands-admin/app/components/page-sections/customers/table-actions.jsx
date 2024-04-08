@@ -3,26 +3,42 @@ import { useState } from "react";
 import { Modal } from "antd";
 import deleteIcon from "@assets/icon/trash.svg";
 import Image from "next/image";
+import { useDeleteCustomerMutation } from "@/app/api/apiSlice";
 
-function DeleteAction({ index }) {
+function DeleteAction({ id, refetchData }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteCustomer, { isError, isLoading }] = useDeleteCustomerMutation();
 
   function showModal() {
     setModalVisible(true);
   }
 
-  const handleOk = () => {
-    console.log("Deleting item at index:", index);
+  const handleCancel = (e) => {
+    e.stopPropagation();
     setModalVisible(false);
   };
 
-  const handleCancel = () => {
-    setModalVisible(false);
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    showModal();
+  };
+
+  const deleteCustomerHandler = async () => {
+    try {
+      const response = await deleteCustomer(id);
+      setModalVisible(false);
+      toast(<span className="text-green-500">Order deleted sucessfully</span>, {
+        hideProgressBar: true,
+        position: "top-center",
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <>
-      <span className="text-right cursor-pointer" onClick={showModal}>
+      <button className="text-right cursor-pointer" onClick={handleDelete}>
         <Image
           src={deleteIcon}
           width={24}
@@ -30,16 +46,15 @@ function DeleteAction({ index }) {
           alt="delete"
           className="mx-auto"
         />
-      </span>
-      <Modal
-        open={modalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-        centered
-      >
+      </button>
+      <Modal open={modalVisible} onCancel={handleCancel} footer={null} centered>
         <div className="flex flex-col gap-3">
-          <p>Are you sure you want to delete this Customer</p>
+          <p className="text-center">
+            Are you sure you want to delete this customer
+          </p>
+          {isLoading && (
+            <p className="text-sm text-gray-300 text-center">loading...</p>
+          )}
           <div className="flex gap-4  mx-auto w-fit">
             <button
               className="bg-blue_400 p-1 px-4 rounded-lg text-white"
@@ -49,7 +64,7 @@ function DeleteAction({ index }) {
             </button>
             <button
               className=" p-1 px-4 rounded-lg text-red_500 border-2 border-red_500"
-              onClick={handleOk}
+              onClick={deleteCustomerHandler}
             >
               Yes
             </button>

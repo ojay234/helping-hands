@@ -18,18 +18,11 @@ function PieChart({ chartData, isLoading }) {
     labels: ["Pending", "Confirmed", "Cancelled", "Completed"],
     datasets: [
       {
-        data: [
-          parseInt(pendingOrders),
-          parseInt(12),
-          parseInt(
-            allOrders - pendingOrders - confirmedOrders - completeOrders
-          ),
-          parseInt(completeOrders),
-        ],
+        data: [parseInt(pendingOrders), parseInt(12), parseInt(6), parseInt(8)],
         backgroundColor: ["#FFCF64", "#6A85B8", "#FF0202", "#12B76A"],
         borderJoinStyle: "milter",
         spacing: 0,
-        borderWidth: [5, 30, 20, 30],
+        borderWidth: [5, 15, 25, 30],
         borderColor: ["#FFCF64", "#6A85B8", "#FF0202", "#12B76A"],
       },
     ],
@@ -46,11 +39,16 @@ function PieChart({ chartData, isLoading }) {
   };
 
   return (
-    <div className="w-fit bg-white p-4 rounded-lg h-[300px] mx-auto">
+    <div className="w-full flex justify-center bg-white p-4 rounded-lg h-[300px] mx-auto relative">
       {isLoading ? (
         <div className="text-sm text-center text-gray-400">loading..</div>
       ) : (
-        <Doughnut data={data} options={options} />
+        <>
+          <p className="absolute w-fit h-fit m-auto left-[35%] top-[140px] font-bold text-[22px] ">
+            Total Orders
+          </p>
+          <Doughnut data={data} options={options}></Doughnut>
+        </>
       )}
     </div>
   );
