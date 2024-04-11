@@ -1,4 +1,3 @@
-
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@components/page-sections/header";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -25,7 +24,7 @@ function OrderDetails() {
 
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 ">
-      <Header title="Customers" />
+      <Header title="Orders" />
       <div className="bg-white py-5 rounded-lg">
         <div className="flex items-center justify-between my-3 px-3">
           {data && (

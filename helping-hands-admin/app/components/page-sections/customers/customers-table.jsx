@@ -6,16 +6,9 @@ import DeleteAction from "./table-actions";
 import { useGetCustomerDataQuery } from "@/app/api/apiSlice";
 import { formatDate } from "../../common/table-items";
 
-function CustomersTable() {
-  const [pageIndex, setPageIndex] = useState(1);
+function CustomersTable({data, isLoading, onPageChange, refetchData}) {
+
   const router = useRouter();
-
-  const { data, isLoading, refetch } = useGetCustomerDataQuery(pageIndex);
-
-  const refetchData = () => {
-    refetch();
-  };
-
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       user_id: item.userId,
@@ -33,9 +26,6 @@ function CustomersTable() {
     );
   };
 
-  const onPageChange = (label) => {
-    setPageIndex(label);
-  };
 
   return (
     <div className="bg-white">

@@ -18,10 +18,10 @@ function CheckoutForm() {
   const userToken = searchParams.get("userToken");
   const [secretKey, setSecretKey] = useState("");
   const [intent, setIntent] = useState("");
+  const [orderError, setOrderError] = useState("");
 
   useEffect(() => {
     const getOrderkey = async () => {
-      console.log("running");
       try {
         // Create the PaymentIntent and obtain clientSecret from your server endpoint
         const res = await fetch(
@@ -41,8 +41,13 @@ function CheckoutForm() {
         }
 
         const data = await res.json();
-        setSecretKey(data.secret);
-        setIntent(data.intent);
+        console.log(data);
+        if (data?.data?.intent) {
+          setSecretKey(data?.data?.secrete);
+          setIntent(data?.data?.intent);
+        } else {
+          setOrderError(data?.message);
+        }
       } catch (err) {}
     };
     getOrderkey();
@@ -82,27 +87,22 @@ function CheckoutForm() {
       // Show error to your customer
       setErrorMessage(submitError.message);
       return;
-    }
-
-    const { error } = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
-      elements,
-      secretKey,
-      confirmParams: {
-        return_url: `${window.location.origin}`,
-      },
-    });
-
-    if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
-      setErrorMessage(error.message);
     } else {
+      console.log("running");
       verifyPayment();
       router.push("/");
     }
   };
+
+  console.log(orderError);
+
+  if (orderError) {
+    return (
+      <div className="text-center w-fit mx-auto mt-20 text-red-500">
+        {orderError}
+      </div>
+    );
+  }
 
   return (
     <form
@@ -117,7 +117,9 @@ function CheckoutForm() {
       </div>
 
       {/* Show error message to your customers */}
-      {errorMessage && <div>{errorMessage}</div>}
+      {errorMessage && (
+        <div className="text-sm text-red-500">{errorMessage}</div>
+      )}
     </form>
   );
 }
