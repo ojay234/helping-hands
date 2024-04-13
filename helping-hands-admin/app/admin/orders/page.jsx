@@ -6,7 +6,6 @@ import OrderTable from "@components/page-sections/orders/order-table";
 
 function Orders() {
   const [filter, setFilter] = useState("");
-  const [filterDate, setFilterDate] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const { data, isLoading, isError, refetch } = useGetOrderDataQuery({
     pageIndex,
@@ -15,8 +14,6 @@ function Orders() {
 
   const handleFilter = (from, to) => {
     setFilter(`filter[date][from]=${from}&filter[date][to]=${to}`);
-    setFilterDate(`${from} to ${to}`);
-    console.log(from, to, "testing");
   };
 
   useEffect(() => {

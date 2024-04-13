@@ -1,13 +1,12 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Table from "@components/common/Table";
 import { customersColumns, customersData } from "@/app/data";
 import DeleteAction from "./table-actions";
-import { useGetCustomerDataQuery } from "@/app/api/apiSlice";
+
 import { formatDate } from "../../common/table-items";
 
-function CustomersTable({data, isLoading, onPageChange, refetchData}) {
-
+function CustomersTable({ data, isLoading, onPageChange, refetchData }) {
   const router = useRouter();
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
@@ -20,12 +19,11 @@ function CustomersTable({data, isLoading, onPageChange, refetchData}) {
     }));
   }, [data]);
 
-  const handleRowClick = (event, row) => {
+  const handleRowClick = (row) => {
     router.push(
       `/admin/customers/orders?userId=${row.user_id}&userName=${row.name}`
     );
   };
-
 
   return (
     <div className="bg-white">
@@ -44,5 +42,3 @@ function CustomersTable({data, isLoading, onPageChange, refetchData}) {
 }
 
 export default CustomersTable;
-
-

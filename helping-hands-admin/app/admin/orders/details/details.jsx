@@ -1,7 +1,10 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@components/page-sections/header";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useGetOrderDetailsQuery } from "@/app/api/apiSlice";
+import {
+  useGetCustomerOrderDetailsQuery,
+  useGetOrderDetailsQuery,
+} from "@/app/api/apiSlice";
 import { useEffect } from "react";
 import OrderDetailsTable from "@/app/components/page-sections/orders/order-details-table";
 
@@ -11,6 +14,10 @@ function OrderDetails() {
   const orderId = searchParams.get("orderId");
 
   const { data, isLoading } = useGetOrderDetailsQuery(orderId);
+  const { data: customerOrderDetail } =
+    useGetCustomerOrderDetailsQuery(orderId);
+
+  console.log("customer", customerOrderDetail);
 
   const handleRowClick = () => {
     router.push(`/admin/orders`);

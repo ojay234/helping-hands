@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import CustomButton from "@components/common/custom-button";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Header({ title, filter, handleFilter }) {
   // State variables to hold the input values and error message
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [error, setError] = useState("");
 
   // Function to handle form submission
   const handleFilterSubmit = (event) => {
@@ -25,14 +25,26 @@ function Header({ title, filter, handleFilter }) {
     threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
 
     if (fromDateObj >= toDateObj) {
-      setError("From date must be lower than to date.");
+      toast(
+        <span className="text-red-500">
+          From date must be lower than to date.
+        </span>,
+        {
+          hideProgressBar: true,
+          position: "top-center",
+        }
+      );
     } else if (threeMonthsLater < toDateObj) {
-      setError("Date range cannot be more than three months.");
+      toast(
+        <span className="text-red-500">
+          Date range cannot be more than three months.
+        </span>,
+        {
+          hideProgressBar: true,
+          position: "top-center",
+        }
+      );
     } else {
-      // Reset error state if validation passes
-      setError("");
-      // Proceed with filtering or any other action
-
       handleFilter(formattedFromDate, formattedToDate);
     }
   };
@@ -59,10 +71,14 @@ function Header({ title, filter, handleFilter }) {
             />
           </div>
 
-          <CustomButton type="submit" primary width="90px">
+          <CustomButton
+            type="submit"
+            primary
+            width="90px"
+            disabled={!fromDate || !toDate}
+          >
             Filter
           </CustomButton>
-          <div>{error && <ErrorMessage>{error}</ErrorMessage>}</div>
         </FilterContainer>
       )}
     </div>

@@ -81,7 +81,9 @@ const BasicPagination = ({ paginationData, onPageChange }) => {
         <li className={`${current_page === 1 ? "disabled-btn" : "page-btn"}`}>
           <span
             onClick={(e) => {
-              handlePageChange(current_page - 1);
+              if (current_page > 1) {
+                handlePageChange(current_page - 1);
+              }
             }}
           >
             <MdOutlineKeyboardArrowLeft size="1.5rem" />
@@ -100,7 +102,9 @@ const BasicPagination = ({ paginationData, onPageChange }) => {
           <span
             className="page-link"
             onClick={() => {
-              handlePageChange(current_page + 1);
+              if (current_page !== last_page) {
+                handlePageChange(current_page + 1);
+              }
             }}
           >
             <MdOutlineKeyboardArrowRight size="1.5rem" />

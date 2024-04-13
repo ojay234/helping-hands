@@ -55,8 +55,8 @@ const api = createApi({
       }),
     }),
     getCustomerData: builder.query({
-      query: (pageNumber) => ({
-        url: `/v1/manager/customers?page=${pageNumber}`,
+      query: ({ pageIndex, filter }) => ({
+        url: `/v1/manager/customers?page=${pageIndex}${filter}`,
         method: "GET",
       }),
     }),

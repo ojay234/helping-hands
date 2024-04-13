@@ -6,7 +6,11 @@ import { useState } from "react";
 
 function Customers() {
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, isLoading, refetch } = useGetCustomerDataQuery(pageIndex);
+  const [filter, setFilter] = useState("");
+  const { data, isLoading, refetch } = useGetCustomerDataQuery({
+    pageIndex,
+    filter,
+  });
 
   const onPageChange = (label) => {
     setPageIndex(label);
@@ -14,10 +18,13 @@ function Customers() {
   const refetchData = () => {
     refetch();
   };
+  const handleFilter = (from, to) => {
+    setFilter(`filter[date][from]=${from}&filter[date][to]=${to}`);
+  };
 
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">
-      <Header title="Customers" />
+      <Header title="Customers" filter handleFilter={handleFilter} />
       <div className="bg-white py-5 rounded-lg">
         <CustomersTable
           data={data}
