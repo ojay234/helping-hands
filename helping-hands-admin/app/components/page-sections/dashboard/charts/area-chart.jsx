@@ -23,7 +23,7 @@ ChartJS.register(
   Filler
 );
 
-function AreaChart({ isLoading, chartData }) {
+function AreaChart({ isLoading, data }) {
   const chartData = {
     labels: ["1", "2", "3", "4", "5", "6"],
     datasets: [

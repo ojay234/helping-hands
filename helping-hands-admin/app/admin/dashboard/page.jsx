@@ -41,7 +41,7 @@ function Dashboard() {
           />
           <AreaChart
             isLoading={dashboardDataLoading}
-            chartData={data?.data?.userRetention}
+            data={data?.data?.userRetention}
           />
         </div>
         <div className="grid gap-4 w-[38%] bg-white custom-shadow rounded-[12px]">
