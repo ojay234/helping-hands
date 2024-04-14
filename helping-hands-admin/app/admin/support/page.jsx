@@ -15,6 +15,8 @@ import CustomSelect from "@/app/components/common/custom-select";
 import { TbCategory } from "react-icons/tb";
 import { useCreateFaqMutation, useGetFaqQuery } from "@/app/api/apiSlice";
 import * as Yup from "yup";
+import { BsTextareaT } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 function Support() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,7 +26,7 @@ function Support() {
     isLoading: isFaqDataLoading,
     refetch,
   } = useGetFaqQuery(pageIndex);
-  const [createFaq, { isLoading, isError }] = useCreateFaqMutation();
+  const [createFaq, { isLoading, isError, isSucess }] = useCreateFaqMutation();
 
   function showModal() {
     setModalVisible(true);
@@ -46,12 +48,27 @@ function Support() {
     answer: Yup.string().required("Required"),
   });
 
+  const refetchData = () => {
+    refetch();
+  };
+
   const submitFaq = async (values) => {
     try {
       const response = await createFaq(values);
-      setModalVisible(false);
-      refetch();
-      setPageIndex(1);
+      if (response?.data?.status) {
+        setModalVisible(false);
+        refetchData();
+        setPageIndex(1);
+        toast(<span className="text-green-500">FAQ created sucessfully</span>, {
+          hideProgressBar: true,
+          position: "top-center",
+        });
+      } else {
+        toast(<span className="text-red-500">Something went wrong</span>, {
+          hideProgressBar: true,
+          position: "top-center",
+        });
+      }
     } catch (err) {
       console.log(error);
     }
@@ -69,6 +86,7 @@ function Support() {
             data={data}
             isLoading={isFaqDataLoading}
             onPageChange={onPageChange}
+            refetch={refetchData}
           />
         </div>
         <div className="max-w-[200px] my-8 mx-auto">
@@ -113,7 +131,7 @@ function Support() {
                 <CustomTextarea
                   label="Answer"
                   placeholder="How to go offline"
-                  icon={IoIosHelpCircleOutline}
+                  icon={BsTextareaT}
                   name="answer"
                   type="text"
                 />

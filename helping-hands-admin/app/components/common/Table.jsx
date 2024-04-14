@@ -9,6 +9,7 @@ function Table({
   data,
   styledHeader,
   onRowClick,
+  onCellClick,
   pagination,
   isLoading,
   paginationData,
@@ -56,7 +57,13 @@ function Table({
                 >
                   {row.cells.map((cell, index) => {
                     return (
-                      <td {...cell.getCellProps()} key={index}>
+                      <td
+                        {...cell.getCellProps()}
+                        key={index}
+                        onClick={(event) =>
+                          onCellClick && onCellClick(cell.column, event)
+                        }
+                      >
                         {cell.render("Cell")}
                       </td>
                     );

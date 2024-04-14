@@ -116,6 +116,19 @@ const api = createApi({
         body,
       }),
     }),
+    updateFaq: builder.mutation({
+      query: ({ body, id }) => ({
+        url: `/v1/manager/faq/${id}/update`,
+        method: "post",
+        body,
+      }),
+    }),
+    deleteFaq: builder.mutation({
+      query: (id) => ({
+        url: `/v1/manager/faq/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
     getHomeStatistic: builder.query({
       query: () => ({
         url: `/v1/business/home/statistics`,
@@ -141,6 +154,8 @@ export const {
   useGetWalletHistoryQuery,
   useGetFaqQuery,
   useGetFaqDetailsQuery,
+  useUpdateFaqMutation,
+  useDeleteFaqMutation,
   useCreateFaqMutation,
   useGetHomeStatisticQuery,
 } = api;

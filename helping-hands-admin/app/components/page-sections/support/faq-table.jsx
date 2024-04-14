@@ -6,10 +6,9 @@ import {
   formatLongText,
   formatStatus,
 } from "../../common/table-items";
+import ActionButtons from "./table-action";
 
-function FaqTable({ data, isLoading, onPageChange }) {
-
-
+function FaqTable({ data, isLoading, onPageChange, refetch }) {
   console.log(data);
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
@@ -17,9 +16,9 @@ function FaqTable({ data, isLoading, onPageChange }) {
       category: item.category,
       question: formatLongText(item.question),
       answer: formatLongText(item.answer),
+      action: <ActionButtons faqItem={item} refetch={refetch} />,
     }));
   }, [data]);
-
 
   return (
     <div className="bg-white">

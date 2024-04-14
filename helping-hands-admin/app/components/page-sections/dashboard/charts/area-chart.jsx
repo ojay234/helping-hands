@@ -23,18 +23,10 @@ ChartJS.register(
   Filler
 );
 
-function AreaChart() {
+function AreaChart({ isLoading, chartData }) {
   const chartData = {
     labels: ["1", "2", "3", "4", "5", "6"],
     datasets: [
-      {
-        label: "Unique Users",
-        data: [2900, 3200, 2600, 3500, 2800, 3200, 2700],
-        fill: false,
-        borderColor: "#8D79F6",
-        tension: 0.4,
-        pointRadius: 0, // Hide points
-      },
       {
         label: "Total Users",
         data: [1800, 2500, 2000, 3200, 3800, 3000, 2200],
@@ -66,18 +58,24 @@ function AreaChart() {
   };
 
   return (
-    <div className="w-full bg-white p-4 rounded-[12px] ">
-      <div className="flex justify-between mt-2 mb-4">
-        <h1 className="font-bold">User Retention</h1>
-        <p className="flex items-center gap-2 text-sm">
-          <span className="bg-[#F25F33] h-3 w-3 rounded-full" />
-          <span>Total Users</span>
-        </p>
-      </div>
-      <div className="">
-        <Line data={chartData} options={chartOptions} />
-      </div>
-    </div>
+    <>
+      {isLoading ? (
+        <div className="text-sm text-center text-gray-400">loading..</div>
+      ) : (
+        <div className="w-full bg-white p-4 rounded-[12px] ">
+          <div className="flex justify-between mt-2 mb-4">
+            <h1 className="font-bold">User Retention</h1>
+            <p className="flex items-center gap-2 text-sm">
+              <span className="bg-[#F25F33] h-3 w-3 rounded-full" />
+              <span>Total Users</span>
+            </p>
+          </div>
+          <div className="">
+            <Line data={chartData} options={chartOptions} />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

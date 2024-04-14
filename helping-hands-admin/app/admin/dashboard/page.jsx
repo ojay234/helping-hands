@@ -28,7 +28,7 @@ function Dashboard() {
     console.log(from, to, "testing");
   };
 
-
+  console.log(data);
 
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">
@@ -39,7 +39,10 @@ function Dashboard() {
             statistic={data?.data?.performanceStatistic}
             filterDate={filterDate}
           />
-          <AreaChart />
+          <AreaChart
+            isLoading={dashboardDataLoading}
+            chartData={data?.data?.userRetention}
+          />
         </div>
         <div className="grid gap-4 w-[38%] bg-white custom-shadow rounded-[12px]">
           <PieChart

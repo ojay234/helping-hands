@@ -49,6 +49,7 @@ const StyledInputContainer = styled.div`
 
 const IconContainer = styled.div`
   position: absolute;
+  color: #818181;
 `;
 
 export default CustomTextarea;

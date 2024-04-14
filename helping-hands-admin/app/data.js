@@ -605,6 +605,10 @@ export const faqColumns = [
     Header: "Answer",
     accessor: "answer",
   },
+  {
+    Header: "Action",
+    accessor: "action",
+  },
 ];
 
 export const categoryOptions = [
@@ -614,6 +618,3 @@ export const categoryOptions = [
   { value: "account", label: "account" },
   { value: "payment", label: "payment" },
 ];
-
-
-

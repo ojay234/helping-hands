@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Table from "@components/common/Table";
 import { customersColumns, customersData } from "@/app/data";
@@ -19,6 +19,12 @@ function CustomersTable({ data, isLoading, onPageChange, refetchData }) {
     }));
   }, [data]);
 
+  const handleCellClick = (cell, event) => {
+    if (cell.Header === "Action") {
+      event.stopPropagation();
+    }
+  };
+
   const handleRowClick = (row) => {
     router.push(
       `/admin/customers/orders?userId=${row.user_id}&userName=${row.name}`
@@ -36,6 +42,7 @@ function CustomersTable({ data, isLoading, onPageChange, refetchData }) {
         paginationData={data?.meta}
         onPageChange={onPageChange}
         isLoading={isLoading}
+        onCellClick={handleCellClick}
       />
     </div>
   );

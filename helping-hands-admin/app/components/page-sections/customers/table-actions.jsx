@@ -4,6 +4,7 @@ import { Modal } from "antd";
 import deleteIcon from "@assets/icon/trash.svg";
 import Image from "next/image";
 import { useDeleteCustomerMutation } from "@/app/api/apiSlice";
+import { toast } from "react-toastify";
 
 function DeleteAction({ id, refetchData }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -14,26 +15,33 @@ function DeleteAction({ id, refetchData }) {
   }
 
   const handleCancel = (e) => {
-    e.stopPropagation();
     setModalVisible(false);
   };
 
   const handleDelete = (e) => {
-    e.stopPropagation();
     showModal();
   };
 
   const deleteCustomerHandler = async () => {
     try {
       const response = await deleteCustomer(id);
-      setModalVisible(false);
-      toast(<span className="text-green-500">Order deleted sucessfully</span>, {
-        hideProgressBar: true,
-        position: "top-center",
-      });
-    } catch (err) {
-      console.log(err);
-    }
+      handleCancel();
+      if (response?.data?.status) {
+        toast(
+          <span className="text-green-500">Order deleted sucessfully</span>,
+          {
+            hideProgressBar: true,
+            position: "top-center",
+          }
+        );
+      } else {
+        toast(<span className="text-red-500">Something went wrong</span>, {
+          hideProgressBar: true,
+          position: "top-center",
+        });
+      }
+    } catch (err) {}
+    refetchData();
   };
 
   return (
