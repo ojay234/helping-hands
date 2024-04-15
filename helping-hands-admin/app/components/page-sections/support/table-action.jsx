@@ -40,7 +40,7 @@ function ActionButtons({ faqItem, refetch }) {
     const { id } = faqItem || {};
     try {
       const response = await deleteFaq(id);
-     
+
       if (response?.data?.status) {
         handleCancel();
         toast(<span className="text-green-500">FAQ deleted sucessfully</span>, {
@@ -176,7 +176,9 @@ function ActionButtons({ faqItem, refetch }) {
           </Formik>
         ) : (
           <div className="flex flex-col gap-3">
-            <p>Are you sure you want to delete this FAQ</p>
+            <p className="text-center">
+              Are you sure you want to delete this FAQ
+            </p>
             {isDeleteLoading && (
               <p className="text-sm text-gray-300 text-center">loading...</p>
             )}

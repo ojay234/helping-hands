@@ -3,21 +3,42 @@ import { useState } from "react";
 import { Modal } from "antd";
 import deleteIcon from "@assets/icon/trash.svg";
 import Image from "next/image";
+import { useAdminAccessMutation } from "@/app/api/apiSlice";
+import { toast } from "react-toastify";
 
-function TableAction({ index }) {
+function TableAction({ adminItem, refetch }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [adminAccess, { isLoading }] = useAdminAccessMutation();
 
   function showModal() {
     setModalVisible(true);
   }
 
-  const handleOk = () => {
-    console.log("Deleting item at index:", index);
+  const handleCancel = () => {
     setModalVisible(false);
   };
 
-  const handleCancel = () => {
-    setModalVisible(false);
+  const toggleAccess = async () => {
+    const { adminId } = adminItem || {};
+    try {
+      const reponse = await adminAccess(adminId);
+      handleCancel();
+      if (response?.data?.status) {
+        toast(
+          <span className="text-green-500">access removed successfully</span>,
+          {
+            hideProgressBar: true,
+            position: "top-center",
+          }
+        );
+      } else {
+        toast(<span className="text-red-500">Something went wrong</span>, {
+          hideProgressBar: true,
+          position: "top-center",
+        });
+      }
+    } catch {}
+    refetch();
   };
 
   return (
@@ -29,22 +50,10 @@ function TableAction({ index }) {
         >
           Suspend
         </button>
-        <button
-          className=" p-1 px-4 rounded-lg text-red_500 border-2 border-red_500"
-          onClick={showModal}
-        >
-          Block
-        </button>
       </div>
-      <Modal
-        open={modalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-        centered
-      >
+      <Modal open={modalVisible} onCancel={handleCancel} footer={null} centered>
         <div className="flex flex-col gap-3">
-          <p>Are you sure you want to block customer</p>
+          <p className="text-center">Are you sure you want remove admin accesss</p>
           <div className="flex gap-4  mx-auto w-fit">
             <button
               className="bg-blue_400 p-1 px-4 rounded-lg text-white"
@@ -54,7 +63,7 @@ function TableAction({ index }) {
             </button>
             <button
               className=" p-1 px-4 rounded-lg text-red_500 border-2 border-red_500"
-              onClick={handleOk}
+              onClick={toggleAccess}
             >
               Yes
             </button>

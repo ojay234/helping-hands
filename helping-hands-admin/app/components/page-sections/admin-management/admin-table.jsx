@@ -6,7 +6,11 @@ import { useGetAdminDataQuery } from "@/app/api/apiSlice";
 
 function ManagementTable() {
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, isLoading } = useGetAdminDataQuery(pageIndex);
+  const { data, isLoading, refetch } = useGetAdminDataQuery(pageIndex);
+
+  const refetchData = () => {
+    refetch();
+  };
 
   console.log(data);
   const rowData = useMemo(() => {
@@ -15,7 +19,7 @@ function ManagementTable() {
       name: item.name,
       email: item.email,
       phone_number: item.phoneNumber,
-      action: <DeleteAction index={index} />,
+      action: <DeleteAction adminItem={item} refetch={refetchData} />,
     }));
   }, [data]);
 
