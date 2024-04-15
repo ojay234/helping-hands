@@ -88,18 +88,25 @@ function CheckoutForm() {
       setErrorMessage(submitError.message);
       return;
     } else {
-      console.log("running");
       verifyPayment();
-      router.push("/");
+      router.push(`/payment/details?orderId=${orderId}userToken=${userToken}`);
     }
   };
-
-  console.log(orderError);
 
   if (orderError) {
     return (
       <div className="text-center w-fit mx-auto mt-20 text-red-500">
         {orderError}
+      </div>
+    );
+  }
+
+  if (!orderId || !userToken) {
+    return (
+      <div className="h-screen  flex flex-col items-center justify-center">
+        <h2 className="text-center text-2xl font-bold">
+          No orderId was provided
+        </h2>
       </div>
     );
   }
@@ -130,8 +137,8 @@ const stripePromise = loadStripe(
 
 const options = {
   mode: "payment",
-  amount: 1099,
   currency: "usd",
+  amount: 10,
   // Fully customizable with appearance API.
   appearance: {
     /*...*/
