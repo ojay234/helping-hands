@@ -20,8 +20,12 @@ function TableAction({ adminItem, refetch }) {
 
   const toggleAccess = async () => {
     const { adminId } = adminItem || {};
+    const body = {
+      admin_id: adminId,
+      _method: "PATCH",
+    };
     try {
-      const reponse = await adminAccess(adminId);
+      const response = await adminAccess(body);
       handleCancel();
       if (response?.data?.status) {
         toast(
@@ -45,15 +49,19 @@ function TableAction({ adminItem, refetch }) {
     <>
       <div className="flex items-center gap-3 w-fit mx-auto">
         <button
-          className=" p-1 px-4 rounded-lg text-yellow_500 border-2 border-yellow_500"
+          className=" p-1 px-2 rounded-lg text-yellow_500 border-2 border-yellow_500 text-sm"
           onClick={showModal}
         >
-          Suspend
+          {adminItem?.status === "1" ? "Remove Access" : "Give Access"}
         </button>
       </div>
       <Modal open={modalVisible} onCancel={handleCancel} footer={null} centered>
         <div className="flex flex-col gap-3">
-          <p className="text-center">Are you sure you want remove admin accesss</p>
+          <p className="text-center">
+            {`  Are you sure you want ${
+              adminItem?.status === "1" ? "remove" : "give"
+            } admin accesss`}
+          </p>
           <div className="flex gap-4  mx-auto w-fit">
             <button
               className="bg-blue_400 p-1 px-4 rounded-lg text-white"

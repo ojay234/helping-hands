@@ -80,8 +80,8 @@ const api = createApi({
     }),
     adminAccess: builder.mutation({
       query: (body) => ({
-        url: `/v1manager/admins/access-revoke`,
-        method: "PATCH",
+        url: `/v1/manager/admins/access-revoke`,
+        method: "post",
         body,
       }),
     }),
