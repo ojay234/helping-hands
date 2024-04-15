@@ -36,10 +36,6 @@ function CheckoutForm() {
           }
         );
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch payment information");
-        }
-
         const data = await res.json();
         console.log(data);
         if (data?.data?.intent) {
@@ -57,6 +53,7 @@ function CheckoutForm() {
   const elements = useElements();
 
   const [errorMessage, setErrorMessage] = useState(null);
+
 
   const verifyPayment = async () => {
     try {
