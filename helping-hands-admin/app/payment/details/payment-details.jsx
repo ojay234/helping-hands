@@ -1,11 +1,14 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+const formatToken = (token) => {
+  return token?.replace(/%/g, "|");
+};
 
 function PaymentDetails() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const userToken = searchParams.get("userToken");
+  const userToken = formatToken(searchParams.get("userToken"));
   const [imgSrc, setImgSrc] = useState("");
 
   useEffect(() => {
@@ -13,6 +16,8 @@ function PaymentDetails() {
       router.push("/");
     }
   }, [orderId]);
+
+
 
   useEffect(() => {
     const getPaymentDetails = async () => {
@@ -30,7 +35,6 @@ function PaymentDetails() {
         );
         const data = await res.json();
         setImgSrc(data?.data?.orderBarcode);
-        console.log(data, "PaymentDetails");
       } catch (err) {
         console.log(err);
       }

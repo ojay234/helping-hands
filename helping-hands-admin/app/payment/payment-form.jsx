@@ -42,7 +42,7 @@ function CheckoutForm() {
         );
 
         const data = await res.json();
-        console.log(data);
+
         if (data?.data?.intent) {
           setSecretKey(data?.data?.secrete);
           setIntent(data?.data?.intent);
@@ -61,14 +61,13 @@ function CheckoutForm() {
 
   const verifyPayment = async () => {
     try {
-      // Create the PaymentIntent and obtain clientSecret from your server endpoint
       const res = await fetch(
         `https://hh.altoservices.net/api/payment-gateway/stripe/${intent}/verify`,
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${userToken}`, // Set bearer token
-            "Content-Type": "application/json", // Assuming the content type is JSON
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -77,20 +76,29 @@ function CheckoutForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (elements == null) {
       return;
     }
 
-    // Trigger form validation and wallet collection
-    const { error: submitError } = await elements.submit();
-    if (submitError) {
-      // Show error to your customer
-      setErrorMessage(submitError.message);
-      return;
-    } else {
-      verifyPayment();
-      router.push(`/payment/details?orderId=${orderId}userToken=${userToken}`);
+    try {
+      const result = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // return_url: `${window.origin}/payment/details?orderId=${orderId}&userToken=${userToken}`,
+        },
+        redirect: "if_required",
+      });
+
+      if (result.error) {
+        console.error("Payment confirmation error:", result.error);
+      } else {
+        verifyPayment();
+        router.push(
+          `${window.origin}/payment/details?orderId=${orderId}&userToken=${userToken}`
+        );
+      }
+    } catch (error) {
+      console.error("Error confirming payment:", error);
     }
   };
 
@@ -144,7 +152,7 @@ function PaymentForm() {
   const userToken = formatToken(searchParams.get("userToken"));
   const [secretKey, setSecretKey] = useState("");
   const [intent, setIntent] = useState("");
-
+  const [orderError, setOrderError] = useState("");
   useEffect(() => {
     const getOrderkey = async () => {
       try {
@@ -162,23 +170,33 @@ function PaymentForm() {
         );
 
         const data = await res.json();
-        console.log(data);
+
         if (data?.data?.intent) {
           setSecretKey(data?.data?.secrete);
           setIntent(data?.data?.intent);
+        } else {
+          setOrderError(data?.message);
         }
       } catch (err) {}
     };
     getOrderkey();
   }, [orderId, userToken]);
 
-  if (!secretKey) {
+  if (!secretKey && !orderError) {
     return <div>Loading...</div>;
+  }
+
+  if (orderError) {
+    return (
+      <div className="text-center w-fit mx-auto mt-20 text-red-500">
+        {orderError}
+      </div>
+    );
   }
 
   const options = {
     clientSecret: secretKey,
-    intent: intent,
+    
   };
 
   return (
