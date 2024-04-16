@@ -19,6 +19,7 @@ function CheckoutForm() {
   const [secretKey, setSecretKey] = useState("");
   const [intent, setIntent] = useState("");
   const [orderError, setOrderError] = useState("");
+  const [paymentElementLoaded, setPaymentElementLoaded] = useState(false);
 
   useEffect(() => {
     const getOrderkey = async () => {
@@ -53,7 +54,6 @@ function CheckoutForm() {
   const elements = useElements();
 
   const [errorMessage, setErrorMessage] = useState(null);
-
 
   const verifyPayment = async () => {
     try {
@@ -113,12 +113,14 @@ function CheckoutForm() {
       onSubmit={handleSubmit}
       className="w-full h-full mt-20 flex flex-col justify-center items-center"
     >
-      <PaymentElement />
-      <div className="my-5 min-w-[150px]">
-        <CustomButton primary type="submit" disabled={!stripe || !elements}>
-          Pay
-        </CustomButton>
-      </div>
+      <PaymentElement onReady={() => setPaymentElementLoaded(true)} />
+      {paymentElementLoaded && (
+        <div className="my-5 min-w-[150px]">
+          <CustomButton primary type="submit" disabled={!stripe || !elements}>
+            Pay
+          </CustomButton>
+        </div>
+      )}
 
       {/* Show error message to your customers */}
       {errorMessage && (
