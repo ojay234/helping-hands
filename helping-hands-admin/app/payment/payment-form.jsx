@@ -11,11 +11,15 @@ import {
 
 import CustomButton from "../components/common/custom-button";
 
+const formatToken = (token) => {
+  return token.replace(/%/g, "|");
+};
+
 function CheckoutForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const userToken = searchParams.get("userToken");
+  const userToken = formatToken(searchParams.get("userToken"));
   const [secretKey, setSecretKey] = useState("");
   const [intent, setIntent] = useState("");
   const [orderError, setOrderError] = useState("");
@@ -133,18 +137,50 @@ function CheckoutForm() {
 const stripePromise = loadStripe(
   "pk_test_51OlLDSKkzJBhYCR2c52sBERnhKGR1MdQtOEaG0jOiez0YkDM3tJgw66hyrSE8odYnc0BnkOSAVYSudPWmn70DqlJ003kdLUWdE"
 );
-
-const options = {
-  mode: "payment",
-  currency: "usd",
-  amount: 10,
-  // Fully customizable with appearance API.
-  appearance: {
-    /*...*/
-  },
-};
-
 function PaymentForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
+  const userToken = formatToken(searchParams.get("userToken"));
+  const [secretKey, setSecretKey] = useState("");
+  const [intent, setIntent] = useState("");
+
+  useEffect(() => {
+    const getOrderkey = async () => {
+      try {
+        // Create the PaymentIntent and obtain clientSecret from your server endpoint
+        const res = await fetch(
+          "https://hh.altoservices.net/api/v1/customer/orders/pay",
+          {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${userToken}`, // Set bearer token
+              "Content-Type": "application/json", // Assuming the content type is JSON
+            },
+            body: JSON.stringify({ order_id: orderId }), // Sending orderId in the request body
+          }
+        );
+
+        const data = await res.json();
+        console.log(data);
+        if (data?.data?.intent) {
+          setSecretKey(data?.data?.secrete);
+          setIntent(data?.data?.intent);
+        }
+      } catch (err) {}
+    };
+    getOrderkey();
+  }, [orderId, userToken]);
+
+  if (!secretKey) {
+    return <div>Loading...</div>;
+  }
+
+  const options = {
+    clientSecret: secretKey,
+    intent: intent,
+  };
+
   return (
     <Elements stripe={stripePromise} options={options}>
       <CheckoutForm />
