@@ -17,8 +17,6 @@ function PaymentDetails() {
     }
   }, [orderId]);
 
-
-
   useEffect(() => {
     const getPaymentDetails = async () => {
       try {
@@ -42,19 +40,23 @@ function PaymentDetails() {
     getPaymentDetails();
   }, [orderId, userToken]);
 
-const handleDownload = async () => {
-  try {
-    const link = document.createElement("a");
-    link.href = imgSrc;
-    link.setAttribute("download", "payment_details.png");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  } catch (error) {
-    console.error("Error downloading image:", error);
-  }
-};
-
+  const handleDownload = async () => {
+    try {
+      if (imgSrc) {
+        const response = await fetch(imgSrc);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "barcode.png");
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      }
+    } catch (err) {
+      console.error("Error downloading image:", err);
+    }
+  };
 
   return (
     <section className="flex flex-col  mx-auto gap-4 h-screen justify-center bg-black">
