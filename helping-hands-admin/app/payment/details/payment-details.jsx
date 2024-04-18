@@ -1,3 +1,4 @@
+import MiniLoader from "@/app/components/common/mini-loader";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 const formatToken = (token) => {
@@ -8,6 +9,8 @@ function PaymentDetails() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(true);
   const userToken = formatToken(searchParams.get("userToken"));
   const [imgSrc, setImgSrc] = useState("");
 
@@ -19,22 +22,26 @@ function PaymentDetails() {
 
   useEffect(() => {
     const getPaymentDetails = async () => {
+      setLoading(true);
       try {
-        // Create the PaymentIntent and obtain clientSecret from your server endpoint
         const res = await fetch(
           `https://hh.altoservices.net/api/v1/customer/orders/${orderId}`,
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${userToken}`, // Set bearer token
-              "Content-Type": "application/json", // Assuming the content type is JSON
+              Authorization: `Bearer ${userToken}`,
+              "Content-Type": "application/json",
             },
           }
         );
         const data = await res.json();
         setImgSrc(data?.data?.orderBarcode);
+        setLoading(false);
+        if (data?.status === false) {
+          setErrorMsg(data?.message);
+        }
       } catch (err) {
-        console.log(err);
+        /* empty */
       }
     };
     getPaymentDetails();
@@ -60,15 +67,26 @@ function PaymentDetails() {
 
   return (
     <section className="flex flex-col  mx-auto gap-4 h-screen justify-center bg-black">
-      <div className="w-[200px] mx-auto">
-        <img src={imgSrc} alt="" className="w-full h-full" />
-      </div>
-      <button
-        className="bg-white w-fit mx-auto my-4 py-2 px-3 rounded-lg"
-        onClick={handleDownload}
-      >
-        Download
-      </button>
+      {loading ? (
+        <div className="mx-fit m-auto">
+          <MiniLoader />
+        </div>
+      ) : errorMsg ? (
+        <p className="text-red-500 w-fit m-auto">{errorMsg}</p>
+      ) : (
+        <>
+          <div className="w-[200px] mx-auto">
+            <img src={imgSrc} alt="" className="w-full h-full" />
+          </div>
+
+          <button
+            className="bg-white w-fit mx-auto my-4 py-2 px-3 rounded-lg"
+            onClick={handleDownload}
+          >
+            Download
+          </button>
+        </>
+      )}
     </section>
   );
 }
