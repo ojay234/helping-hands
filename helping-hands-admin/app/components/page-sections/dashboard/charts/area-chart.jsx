@@ -11,6 +11,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+import moment from "moment";
 
 ChartJS.register(
   CategoryScale,
@@ -24,12 +25,21 @@ ChartJS.register(
 );
 
 function AreaChart({ isLoading, data }) {
+  const usersData = data?.map((item) => parseInt(item.users));
+  const dates = data?.map((item) => {
+    const dateRange = item.date.split(" - ");
+    const startDate = moment(dateRange[0]).format("MM/DD");
+    const endDate = moment(dateRange[1]).format("MM/DD");
+    return `${endDate}`;
+  });
+  const maxData = data ? Math.max(...usersData) : 0;
+
   const chartData = {
-    labels: ["1", "2", "3", "4", "5", "6"],
+    labels: dates,
     datasets: [
       {
         label: "Total Users",
-        data: [1800, 2500, 2000, 3200, 3800, 3000, 2200],
+        data: usersData,
         fill: true,
         backgroundColor: "#ffd0c2",
         borderColor: "#F25F33",
@@ -45,7 +55,7 @@ function AreaChart({ isLoading, data }) {
       y: {
         ticks: {
           min: 0,
-          max: 4000,
+          max: maxData,
           stepSize: 1000,
         },
       },
