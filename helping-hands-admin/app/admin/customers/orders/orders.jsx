@@ -23,7 +23,6 @@ function Orders() {
     }
   }, [userId]);
 
-  console.log(data);
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 ">
       <Header title="Customers" />

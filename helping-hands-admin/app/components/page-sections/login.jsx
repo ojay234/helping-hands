@@ -36,7 +36,7 @@ function Login() {
     };
     try {
       const response = await login(loginData);
-      console.log(response);
+
       if (response.data && response.data.data.token) {
         localStorage.setItem("auth_token", response?.data?.data?.token);
         localStorage.setItem("id", response.data?.data?.id);
@@ -44,7 +44,6 @@ function Login() {
         router.push("/admin/dashboard");
       }
     } catch (error) {
-      /*empty*/
       console.log(error);
     }
   };

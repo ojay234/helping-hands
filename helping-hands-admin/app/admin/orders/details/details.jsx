@@ -17,7 +17,6 @@ function OrderDetails() {
   const { data: customerOrderDetail } =
     useGetCustomerOrderDetailsQuery(orderId);
 
-  console.log("customer", customerOrderDetail);
 
   const handleRowClick = () => {
     router.push(`/admin/orders`);

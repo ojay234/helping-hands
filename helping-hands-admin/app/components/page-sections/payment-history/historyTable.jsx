@@ -16,7 +16,6 @@ function HistoryTable() {
   const [pageIndex, setPageIndex] = useState(1);
   const { data, isLoading } = useGetWalletHistoryQuery(pageIndex);
 
-  console.log(data);
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       date: formatTimeStampDate(item.created),

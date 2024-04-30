@@ -7,7 +7,6 @@ const api = createApi({
     prepareHeaders: (headers, { getState }) => {
       const user = selectUser(getState());
       const token = user ? user.token : localStorage.getItem("auth_token");
-      console.log("Token:", token);
 
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

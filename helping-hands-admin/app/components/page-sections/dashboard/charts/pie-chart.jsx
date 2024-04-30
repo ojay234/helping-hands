@@ -8,17 +8,20 @@ function PieChart({ chartData, isLoading }) {
     chartData || {};
 
   // Calculate the total number of orders
-  const totalOrders =
-    parseInt(pendingOrders) +
-    parseInt(confirmedOrders) +
-    parseInt(completeOrders);
 
   // Define chart data
   const data = {
     labels: ["Pending", "Confirmed", "Cancelled", "Completed"],
     datasets: [
       {
-        data: [parseInt(pendingOrders), parseInt(12), parseInt(6), parseInt(8)],
+        data: [
+          parseInt(pendingOrders),
+          parseInt(confirmedOrders),
+          parseInt(
+            allOrders - completeOrders - pendingOrders - confirmedOrders
+          ),
+          parseInt(completeOrders),
+        ],
         backgroundColor: ["#FFCF64", "#6A85B8", "#FF0202", "#12B76A"],
         borderJoinStyle: "milter",
         spacing: 0,

@@ -12,7 +12,6 @@ function ManagementTable() {
     refetch();
   };
 
-  console.log(data);
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       serial_no: index + 1,

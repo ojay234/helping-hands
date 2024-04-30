@@ -9,7 +9,6 @@ import {
 import ActionButtons from "./table-action";
 
 function FaqTable({ data, isLoading, onPageChange, refetch }) {
-  console.log(data);
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       id: item.id,

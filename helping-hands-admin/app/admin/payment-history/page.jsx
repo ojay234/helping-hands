@@ -14,7 +14,6 @@ function PaymentHistory() {
   const [hideBalance, setHideBalance] = useState(false);
   const { data: balanceData, isLoading: isLoadingBalance } =
     useGetBalanceQuery();
-  console.log("balance", balanceData);
   const getBalance = (type) => {
     if (type === "available") {
       const availableBalance = balanceData?.data?.available[0];
