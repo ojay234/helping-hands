@@ -14,8 +14,7 @@ function OrderDetails() {
   const orderId = searchParams.get("orderId");
 
   const { data, isLoading } = useGetOrderDetailsQuery(orderId);
-  const { data: customerOrderDetail } =
-    useGetCustomerOrderDetailsQuery(orderId);
+ 
 
 
   const handleRowClick = () => {
