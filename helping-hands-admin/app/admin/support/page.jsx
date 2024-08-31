@@ -64,13 +64,18 @@ function Support() {
           position: "top-center",
         });
       } else {
-        toast(<span className="text-red-500">Something went wrong</span>, {
-          hideProgressBar: true,
-          position: "top-center",
-        });
+        toast(
+          <span className="text-red-500">
+            {response?.data?.message || "Something went wrong"}
+          </span>,
+          {
+            hideProgressBar: true,
+            position: "top-center",
+          }
+        );
       }
     } catch (err) {
-      console.log(error);
+      console.log(err);
     }
   };
 

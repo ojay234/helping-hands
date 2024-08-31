@@ -31,55 +31,55 @@ const api = createApi({
     }),
     getDashboardData: builder.query({
       query: (filter) => ({
-        url: `/v1/manager/dashboard?${filter}`,
+        url: `/v1/admin/dashboard?${filter}`,
         method: "GET",
       }),
     }),
     getOrderData: builder.query({
       query: ({ pageIndex, filter }) => ({
-        url: `/v1/manager/orders?page=${pageIndex}${filter}`,
+        url: `/v1/admin/orders?page=${pageIndex}${filter}`,
         method: "GET",
       }),
     }),
     DeleteOrder: builder.mutation({
       query: (id) => ({
-        url: `/v1/manager/orders/${id}/delete`,
+        url: `/v1/admin/orders/${id}/delete`,
         method: "DELETE",
       }),
     }),
     getOrderDetails: builder.query({
       query: (id) => ({
-        url: `/v1/manager/orders/${id}/details`,
+        url: `/v1/admin/orders/${id}/details`,
         method: "GET",
       }),
     }),
     getCustomerData: builder.query({
       query: ({ pageIndex, filter }) => ({
-        url: `/v1/manager/customers?page=${pageIndex}${filter}`,
+        url: `/v1/admin/customers?page=${pageIndex}${filter}`,
         method: "GET",
       }),
     }),
     getCustomerOrders: builder.query({
       query: (id) => ({
-        url: `/v1/manager/customers/${id}/orders`,
+        url: `/v1/admin/customers/${id}/orders`,
         method: "GET",
       }),
     }),
     deleteCustomer: builder.mutation({
       query: (id) => ({
-        url: `/v1/manager/customers/${id}/delete`,
+        url: `/v1/admin/customers/${id}/delete`,
         method: "DELETE",
       }),
     }),
     getAdminData: builder.query({
       query: (pageNumber) => ({
-        url: `/v1/manager/admins?page=${pageNumber}`,
+        url: `/v1/admin/admins?page=${pageNumber}`,
         method: "GET",
       }),
     }),
     adminAccess: builder.mutation({
       query: (body) => ({
-        url: `/v1/manager/admins/access-revoke`,
+        url: `/v1/admin/admins/access-revoke`,
         method: "post",
         body,
       }),
@@ -98,33 +98,33 @@ const api = createApi({
     }),
     getFaq: builder.query({
       query: (pageNumber) => ({
-        url: `/v1/manager/faq?page=${pageNumber}`,
+        url: `/v1/admin/faq?page=${pageNumber}`,
         method: "GET",
       }),
     }),
     getFaqDetails: builder.query({
       query: (id) => ({
-        url: `/v1/manager/faq/${id}/view`,
+        url: `/v1/admin/faq/${id}/view`,
         method: "GET",
       }),
     }),
     createFaq: builder.mutation({
       query: (body) => ({
-        url: `/v1/manager/faq/create`,
+        url: `/v1/admin/faq/create`,
         method: "POST",
         body,
       }),
     }),
     updateFaq: builder.mutation({
       query: ({ body, id }) => ({
-        url: `/v1/manager/faq/${id}/update`,
+        url: `/v1/admin/faq/${id}/update`,
         method: "post",
         body,
       }),
     }),
     deleteFaq: builder.mutation({
       query: (id) => ({
-        url: `/v1/manager/faq/${id}/delete`,
+        url: `/v1/admin/faq/${id}/delete`,
         method: "DELETE",
       }),
     }),
@@ -132,6 +132,52 @@ const api = createApi({
       query: () => ({
         url: `/v1/business/home/statistics`,
         method: "GET",
+      }),
+    }),
+    getDeliveryMen: builder.query({
+      query: () => ({
+        url: `/v1/admin/deliveryman`,
+        method: "GET",
+      }),
+    }),
+    getDeliveryMan: builder.query({
+      query: (id) => ({
+        url: `/v1/admin/deliveryman/${id}`,
+        method: "GET",
+      }),
+    }),
+    getDeliveryManOrders: builder.query({
+      query: (id) => ({
+        url: `/v1/admin/deliveryman/${id}/orders`,
+        method: "GET",
+      }),
+    }),
+
+    createDeliveryMan: builder.mutation({
+      query: (body) => ({
+        url: `/v1/admin/deliveryman/create`,
+        method: "POST",
+        body,
+      }),
+    }),
+    updateDeliveryMan: builder.mutation({
+      query: ({ body }) => ({
+        url: `/v1/admin/deliveryman/update`,
+        method: "post",
+        body,
+      }),
+    }),
+    deleteDeliveryMan: builder.mutation({
+      query: (id) => ({
+        url: `/v1/admin/deliveryman/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
+    changeDeliveryManStatus: builder.mutation({
+      query: (body) => ({
+        url: `/v1/admin/deliveryman/change-status`,
+        method: "post",
+        body,
       }),
     }),
   }),
@@ -157,6 +203,11 @@ export const {
   useDeleteFaqMutation,
   useCreateFaqMutation,
   useGetHomeStatisticQuery,
+  useGetDeliveryManQuery,
+  useGetDeliveryMenQuery,
+  useCreateDeliveryManMutation,
+  useGetDeliveryManOrdersQuery,
+  useChangeDeliveryManStatusMutation,
 } = api;
 
 export default api;

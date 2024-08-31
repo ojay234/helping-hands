@@ -11,7 +11,11 @@ function CustomInput({
   iconClicked,
 }) {
   return (
-    <StyledInputContainer icon={Icon} reverse={reverse}>
+    <StyledInputContainer
+      icon={Icon}
+      reverse={reverse}
+      className="flex flex-col gap-1"
+    >
       <label>{label}</label>
       <div className="input-container">
         {Icon && (
@@ -36,7 +40,6 @@ const StyledInputContainer = styled.div`
     font-size: 16px;
     font-weight: 700;
     color: #818181;
-    margin-bottom: 5px;
   }
 
   .input-container {

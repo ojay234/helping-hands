@@ -31,7 +31,7 @@ function Login() {
     const loginData = {
       email,
       password,
-      user_type: "business",
+      user_type: "admin",
       device_name: "android",
     };
     try {

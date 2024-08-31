@@ -54,6 +54,12 @@ const menuItems = [
     activeIcon: supportActiveIcon,
     path: "/admin/support",
   },
+  {
+    title: "Delivery Man",
+    icon: ordersIcon,
+    activeIcon: ordersActiveIcon,
+    path: "/admin/delivery-man",
+  },
 ];
 
 function Sidebar() {

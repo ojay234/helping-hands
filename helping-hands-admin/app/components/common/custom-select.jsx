@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 function CustomSelect({ name, label, placeholder, options, icon: Icon }) {
   return (
-    <StyledInputContainer icon={Icon}>
+    <StyledInputContainer icon={Icon} className="flex flex-col gap-1">
       <label>{label}</label>
       <div className="input-container">
         {Icon && <IconContainer>{<Icon size="1.2rem" />}</IconContainer>}
@@ -27,7 +27,7 @@ const StyledInputContainer = styled.div`
     font-size: 16px;
     font-weight: 700;
     color: #818181;
-    margin-bottom: 5px;
+   
   }
 
   .input-container {

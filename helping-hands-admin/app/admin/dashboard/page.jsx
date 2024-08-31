@@ -25,10 +25,7 @@ function Dashboard() {
   const handleFilter = (from, to) => {
     setFilter(`filter[date][from]=${from}&filter[date][to]=${to}`);
     setFilterDate(`${from} to ${to}`);
-
   };
-
-
 
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">

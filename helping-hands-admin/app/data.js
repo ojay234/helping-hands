@@ -618,3 +618,80 @@ export const categoryOptions = [
   { value: "account", label: "account" },
   { value: "payment", label: "payment" },
 ];
+
+export const deliveryMenColumn = [
+  {
+    Header: "S/N",
+    accessor: "id",
+  },
+  {
+    Header: "Role",
+    accessor: "role",
+  },
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Email",
+    accessor: "email",
+  },
+  {
+    Header: "Phone",
+    accessor: "phone",
+  },
+  {
+    Header: "Rating",
+    accessor: "rating",
+  },
+  {
+    Header: "Status",
+    accessor: "status",
+  },
+  {
+    Header: "Action",
+    accessor: "action",
+  },
+];
+
+export const deliveryManOrderColumn = [
+  {
+    Header: "S/N",
+    accessor: "num",
+  },
+  {
+    Header: "ID",
+    accessor: "order_Id",
+  },
+  {
+    Header: "Title",
+    accessor: "title",
+  },
+  {
+    Header: "Number",
+    accessor: "order_number",
+  },
+  {
+    Header: "Cost",
+    accessor: "cost",
+  },
+  {
+    Header: "Date",
+    accessor: "date",
+  },
+  {
+    Header: "Status",
+    accessor: "status",
+  },
+];
+
+export const deliveryManStatusCategory = [
+  {
+    value: "inactive",
+    label: "inactive",
+  },
+  {
+    value: "active",
+    label: "active",
+  },
+];
