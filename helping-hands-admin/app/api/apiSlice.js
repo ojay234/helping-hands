@@ -141,8 +141,14 @@ const api = createApi({
       }),
     }),
     getDeliveryMan: builder.query({
-      query: (id) => ({
+      query: () => ({
         url: `/v1/admin/deliveryman/${id}`,
+        method: "GET",
+      }),
+    }),
+    getAssignableDeliveryMan: builder.query({
+      query: () => ({
+        url: `/v1/admin/deliveryman/order/assignable`,
         method: "GET",
       }),
     }),
@@ -180,6 +186,13 @@ const api = createApi({
         body,
       }),
     }),
+    assignDeliveryManOrder: builder.mutation({
+      query: (body) => ({
+        url: `/v1/admin/orders/assign`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -208,6 +221,8 @@ export const {
   useCreateDeliveryManMutation,
   useGetDeliveryManOrdersQuery,
   useChangeDeliveryManStatusMutation,
+  useGetAssignableDeliveryManQuery,
+  useAssignDeliveryManOrderMutation,
 } = api;
 
 export default api;

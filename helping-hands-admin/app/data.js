@@ -695,3 +695,31 @@ export const deliveryManStatusCategory = [
     label: "active",
   },
 ];
+
+export const assignableDeliveryManColumn = [
+  {
+    Header: "S/N",
+    accessor: "num",
+  },
+
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Email",
+    accessor: "email",
+  },
+  {
+    Header: "Phone",
+    accessor: "phone",
+  },
+  {
+    Header: "Status",
+    accessor: "status",
+  },
+  {
+    Header: "Action",
+    accessor: "action",
+  },
+];

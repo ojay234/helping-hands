@@ -66,7 +66,7 @@ function Support() {
       } else {
         toast(
           <span className="text-red-500">
-            {response?.data?.message || "Something went wrong"}
+            {response?.error?.data?.message || "Something went wrong"}
           </span>,
           {
             hideProgressBar: true,
