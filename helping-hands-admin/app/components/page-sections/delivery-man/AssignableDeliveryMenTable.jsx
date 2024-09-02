@@ -64,9 +64,8 @@ function AssignableDeliveryMenTable({
       status: item.status,
       action: (
         <button
-          className="text-white p-2 rounded-md"
+          className="text-white p-2 rounded-md bg-green-500"
           onClick={() => assignOrder(item)}
-          disabled={!orderAssignStatus}
         >
           Assign Order
         </button>
