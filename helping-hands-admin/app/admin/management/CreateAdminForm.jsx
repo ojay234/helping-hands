@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useCreateDeliveryManMutation } from "@/app/api/apiSlice";
+import { useCreateAdminUserMutation } from "@/app/api/apiSlice";
 
 import CustomButton from "@/app/components/common/custom-button";
-import { deliveryManStatusCategory } from "@/app/data";
+import { adminRoles, deliveryManStatusCategory } from "@/app/data";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -15,53 +15,50 @@ const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const initialValues = {
-  deliveryman_name: "",
-  deliveryman_phone_number: "",
-  deliveryman_email_address: "",
-  deliveryman_status: deliveryManStatusCategory[0]?.value,
-  deliveryman_password: "",
+  role: adminRoles[0].value,
+  name: "",
+  email_address: "",
+  phone_number: "",
+  password: "",
 };
 
-const deliveryManValidationSchema = Yup.object().shape({
-  deliveryman_name: Yup.string().required("Required"),
-  deliveryman_phone_number: Yup.string()
+const adminUserValidationSchema = Yup.object().shape({
+  role: Yup.string().required("Required"),
+  name: Yup.string().required("Required"),
+  email_address: Yup.string().required("Required"),
+  phone_number: Yup.string()
     .matches(phoneRegExp, "Phone number is not valid")
     .required("Required"),
-  deliveryman_email_address: Yup.string().required("Required"),
-  deliveryman_status: Yup.string().required("Required"),
-  deliveryman_password: Yup.string().required("Required"),
+  password: Yup.string().required("Required"),
 });
 
-function DeliveryManForm({
-  setPageIndex,
+function CreateAdminForm({
   refetch,
   modalVisible,
   setModalVisible,
+  setPageIndex,
   showModal,
   handleCancel,
 }) {
   const [
-    createDeliveryMan,
-    {
-      isLoading: isCreateDeliveryManLoading,
-      isError: isCreatingDeliveryManError,
-    },
-  ] = useCreateDeliveryManMutation();
+    createAdminUser,
+    { isLoading: isCreateAdminUserLoading, isError: isCreatingAdminUserError },
+  ] = useCreateAdminUserMutation();
 
   const refetchData = () => {
     refetch();
   };
 
-  const submitDeliveryMan = async (values) => {
+  const submitAdminUser = async (values) => {
     try {
-      const response = await createDeliveryMan(values);
+      const response = await createAdminUser(values);
       if (response?.data?.status) {
         setModalVisible(false);
         refetchData();
         setPageIndex(1);
         toast(
           <span className="text-green-500">
-            Delivery Man created sucessfully
+            Admin User created sucessfully
           </span>,
           {
             hideProgressBar: true,
@@ -95,26 +92,25 @@ function DeliveryManForm({
       >
         <Formik
           initialValues={initialValues}
-          validationSchema={deliveryManValidationSchema}
-          onSubmit={submitDeliveryMan}
+          validationSchema={adminUserValidationSchema}
+          onSubmit={submitAdminUser}
         >
           {({ isValid }) => (
             <Form>
               <div className="flex  flex-wrap items-center justify-between gap-3 w-full">
                 <div className="w-[45%]">
-                  <CustomInput
-                    label="Name"
-                    placeholder="Name"
-                    type="text"
-                    name="deliveryman_name"
+                  <CustomSelect
+                    label="Status"
+                    name="role"
+                    options={adminRoles}
                   />
                 </div>
                 <div className="w-[45%]">
                   <CustomInput
-                    label="Phone"
-                    placeholder="Phone"
+                    label="Name"
+                    placeholder="Name"
                     type="text"
-                    name="deliveryman_phone_number"
+                    name="name"
                   />
                 </div>
                 <div className="w-[45%]">
@@ -122,22 +118,24 @@ function DeliveryManForm({
                     label="Email"
                     placeholder="Email"
                     type="text"
-                    name="deliveryman_email_address"
+                    name="email_address"
                   />
                 </div>
                 <div className="w-[45%]">
-                  <CustomSelect
-                    label="Status"
-                    name="deliveryman_status"
-                    options={deliveryManStatusCategory}
+                  <CustomInput
+                    label="Phone"
+                    placeholder="Phone"
+                    type="text"
+                    name="phone_number"
                   />
                 </div>
+
                 <div className="w-[45%]">
                   <CustomInput
                     label="Password"
                     placeholder="Password"
                     type="password"
-                    name="deliveryman_password"
+                    name="password"
                   />
                 </div>
               </div>
@@ -147,8 +145,8 @@ function DeliveryManForm({
                   primary
                   clicked={showModal}
                   type="submit"
-                  isLoading={isCreateDeliveryManLoading}
-                  disabled={!isValid || isCreateDeliveryManLoading}
+                  isLoading={isCreateAdminUserLoading}
+                  disabled={!isValid || isCreateAdminUserLoading}
                 >
                   Submit
                 </CustomButton>
@@ -161,4 +159,4 @@ function DeliveryManForm({
   );
 }
 
-export default DeliveryManForm;
+export default CreateAdminForm;

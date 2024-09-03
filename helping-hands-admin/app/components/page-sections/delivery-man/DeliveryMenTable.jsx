@@ -62,7 +62,7 @@ function DeliveryMenTable({ data, isLoading, onPageChange, refetch }) {
           }`}
           onClick={() => toggleAccess(item)}
         >
-          {item.status === "active" ? "Deactive" : "Active"}
+          {item.status === "active" ? "Deactivate" : "Activate"}
         </button>
       ),
     }));

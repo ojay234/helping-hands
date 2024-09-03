@@ -6,12 +6,14 @@ import { FaStar } from "react-icons/fa";
 import { useAssignDeliveryManOrderMutation } from "@/app/api/apiSlice";
 import { toast } from "react-toastify";
 import { assignableDeliveryManColumn } from "@/app/data";
+import MiniLoader from "../../common/mini-loader";
 
 function AssignableDeliveryMenTable({
   data,
   isLoading,
   onPageChange,
-  refetch,
+  refetchAssignableDeliveryMan,
+  refetchOrderDetails,
   orderId,
   handleCancel,
 }) {
@@ -52,7 +54,8 @@ function AssignableDeliveryMenTable({
         );
       }
     } catch {}
-    refetch();
+    refetchAssignableDeliveryMan();
+    refetchOrderDetails();
   };
 
   const rowData = useMemo(() => {
@@ -64,10 +67,11 @@ function AssignableDeliveryMenTable({
       status: item.status,
       action: (
         <button
-          className="text-white p-2 rounded-md bg-green-500"
+          className="text-white px-2 py-1 rounded-md bg-green-500 flex gap-2 text-[13px] items-center"
           onClick={() => assignOrder(item)}
         >
-          Assign Order
+          {isStatusChangeLoading && <MiniLoader />}
+          <span> Assign Order</span>
         </button>
       ),
     }));

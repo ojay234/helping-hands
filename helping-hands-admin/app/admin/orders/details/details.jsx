@@ -26,7 +26,11 @@ function OrderDetails() {
     }
   }, [orderId]);
 
-  const { data, isLoading } = useGetOrderDetailsQuery(orderId);
+  const {
+    data,
+    isLoading,
+    refetch: refetchOrderDetails,
+  } = useGetOrderDetailsQuery(orderId);
   const {
     data: assignableDeliveryMen,
     isLoading: assignableDeliveryMenLoading,
@@ -84,7 +88,8 @@ function OrderDetails() {
           <AssignableDeliveryMenTable
             orderId={orderId}
             data={assignableDeliveryMen}
-            refetch={refetchAssignableDeliveryMan}
+            refetchAssignableDeliveryMan={refetchAssignableDeliveryMan}
+            refetchOrderDetails={refetchOrderDetails}
             onPageChange={onPageChange}
             isLoading={assignableDeliveryMenLoading}
             handleCancel={handleCancel}

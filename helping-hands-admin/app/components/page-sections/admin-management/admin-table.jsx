@@ -4,9 +4,8 @@ import { adminColumns, adminData } from "@/app/data";
 import DeleteAction from "./table-action";
 import { useGetAdminDataQuery } from "@/app/api/apiSlice";
 
-function ManagementTable() {
+function ManagementTable({ data, isLoading, refetch, onPageChange }) {
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, isLoading, refetch } = useGetAdminDataQuery(pageIndex);
 
   const refetchData = () => {
     refetch();
@@ -21,10 +20,6 @@ function ManagementTable() {
       action: <DeleteAction adminItem={item} refetch={refetchData} />,
     }));
   }, [data]);
-
-  const onPageChange = (label) => {
-    setPageIndex(label);
-  };
 
   return (
     <div className="bg-white">

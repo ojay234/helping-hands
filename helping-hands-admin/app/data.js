@@ -696,6 +696,17 @@ export const deliveryManStatusCategory = [
   },
 ];
 
+export const adminRoles = [
+  {
+    value: "employee",
+    label: "employee",
+  },
+  {
+    value: "manager",
+    label: "manager",
+  },
+];
+
 export const assignableDeliveryManColumn = [
   {
     Header: "S/N",

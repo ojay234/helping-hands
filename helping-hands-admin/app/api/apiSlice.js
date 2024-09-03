@@ -71,9 +71,16 @@ const api = createApi({
         method: "DELETE",
       }),
     }),
+    createAdminUser: builder.mutation({
+      query: (body) => ({
+        url: `/v1/admin/users/create`,
+        method: "POST",
+        body,
+      }),
+    }),
     getAdminData: builder.query({
       query: (pageNumber) => ({
-        url: `/v1/admin/admins?page=${pageNumber}`,
+        url: `/v1/admin/users?page=${pageNumber}`,
         method: "GET",
       }),
     }),
@@ -223,6 +230,7 @@ export const {
   useChangeDeliveryManStatusMutation,
   useGetAssignableDeliveryManQuery,
   useAssignDeliveryManOrderMutation,
+  useCreateAdminUserMutation,
 } = api;
 
 export default api;
