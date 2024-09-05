@@ -78,6 +78,19 @@ const api = createApi({
         body,
       }),
     }),
+    updateAdminUser: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/v1/admin/users/${id}/update`,
+        method: "PATCH",
+        body,
+      }),
+    }),
+    deleteAdminUser: builder.mutation({
+      query: (id) => ({
+        url: `/v1/admin/users/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
     getAdminData: builder.query({
       query: (pageNumber) => ({
         url: `/v1/admin/users?page=${pageNumber}`,
@@ -148,7 +161,7 @@ const api = createApi({
       }),
     }),
     getDeliveryMan: builder.query({
-      query: () => ({
+      query: (id) => ({
         url: `/v1/admin/deliveryman/${id}`,
         method: "GET",
       }),
@@ -174,9 +187,9 @@ const api = createApi({
       }),
     }),
     updateDeliveryMan: builder.mutation({
-      query: ({ body }) => ({
+      query: (body) => ({
         url: `/v1/admin/deliveryman/update`,
-        method: "post",
+        method: "PATCH",
         body,
       }),
     }),
@@ -227,10 +240,14 @@ export const {
   useGetDeliveryMenQuery,
   useCreateDeliveryManMutation,
   useGetDeliveryManOrdersQuery,
+  useUpdateDeliveryManMutation,
+  useDeleteDeliveryManMutation,
   useChangeDeliveryManStatusMutation,
   useGetAssignableDeliveryManQuery,
   useAssignDeliveryManOrderMutation,
   useCreateAdminUserMutation,
+  useUpdateAdminUserMutation,
+  useDeleteAdminUserMutation,
 } = api;
 
 export default api;

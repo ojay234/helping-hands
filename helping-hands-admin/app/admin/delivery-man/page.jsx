@@ -20,6 +20,10 @@ function DeliveryMan() {
     filter,
   });
 
+  useEffect(() => {
+    refetch();
+  }, []);
+
   const handleFilter = (from, to) => {
     setFilter(`filter[date][from]=${from}&filter[date][to]=${to}`);
   };

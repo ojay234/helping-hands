@@ -7,19 +7,29 @@ import {
   useGetDeliveryManQuery,
   useGetOrderDetailsQuery,
 } from "@/app/api/apiSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import DeliveryManOrderDetailsTable from "@/app/components/page-sections/delivery-man/DeliveryManOrderTable";
 import { FaStar } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+import { MdDelete, MdDeleteOutline } from "react-icons/md";
+import DeliveryManForm from "../DeliveryManForm";
+import DeleteDeliveryMan from "../DeleteDeliveryMan";
 
 function DeliveryManOrderDetails() {
   const router = useRouter();
-
   const { id } = useParams();
+  const [pageIndex, setPageIndex] = useState(1);
+  const [editDetails, setEditDetails] = useState(null);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const { data, isLoading, isError } = useGetDeliveryManOrdersQuery(id);
-  const { data: deliveryManDetails, isError: deliveryManDetailsError } =
-    useGetDeliveryManQuery(id);
+  const {
+    data: deliveryManDetails,
+    isError: deliveryManDetailsError,
+    refetch,
+  } = useGetDeliveryManQuery(id);
 
   const handleRowClick = () => {
     router.push(`/admin/orders`);
@@ -34,9 +44,37 @@ function DeliveryManOrderDetails() {
   const { avatar, role, name, emailAddress, phoneNumber, rating, status } =
     deliveryManDetails?.data || {};
 
+  function showEditModal() {
+    setEditModalVisible(true);
+  }
 
-    
+  function showDeleteModal() {
+    setDeleteModalVisible(true);
+  }
 
+  const handleDeleteCancel = () => {
+    setDeleteModalVisible(false);
+  };
+
+  const handleEditCancel = () => {
+    setEditModalVisible(false);
+  };
+  const onPageChange = (label) => {
+    setPageIndex(label);
+  };
+
+  const editDetailsHandler = () => {
+    setEditDetails({
+      deliveryman_id: id,
+      deliveryman_name: name,
+      deliveryman_phone_number: phoneNumber,
+      deliveryman_email_address: emailAddress,
+      deliveryman_status: status,
+    });
+    showEditModal();
+  };
+
+  console.log({ data });
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 ">
       <Header title="Delivery Man" />
@@ -82,13 +120,45 @@ function DeliveryManOrderDetails() {
                 </span>
               </p>
             </div>
+            <div className="my-1 flex gap-1 items-center">
+              <button
+                className="hover:border-2 border-gray-500 rounded-md p-1 text-gray-500"
+                onClick={() => editDetailsHandler()}
+              >
+                <FiEdit size="1.2rem" />
+              </button>
+              <button
+                className="hover:border-2 border-red-500 rounded-md p-1 text-red-500"
+                onClick={() => showDeleteModal()}
+              >
+                <MdDeleteOutline size="1.2rem" />
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       <div>
-        <DeliveryManOrderDetailsTable data={data} isLoading={isLoading} />
+        <DeliveryManOrderDetailsTable
+          data={data}
+          isLoading={isLoading}
+          onPageChange={onPageChange}
+        />
       </div>
+      <DeliveryManForm
+        modalVisible={editModalVisible}
+        setModalVisible={setEditModalVisible}
+        refetch={refetch}
+        showModal={showEditModal}
+        handleCancel={handleEditCancel}
+        setPageIndex={setPageIndex}
+        editDetails={editDetails}
+      />
+      <DeleteDeliveryMan
+        modalVisible={deleteModalVisible}
+        handleCancel={handleDeleteCancel}
+        deliveryManDetails={deliveryManDetails?.data}
+      />
     </section>
   );
 }

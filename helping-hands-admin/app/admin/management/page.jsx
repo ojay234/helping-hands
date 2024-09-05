@@ -40,7 +40,7 @@ function Management() {
       </div>
       <CreateAdminForm
         modalVisible={modalVisible}
-        setPageIndex={setPageIndex}
+        onPageChange={onPageChange}
         setModalVisible={setModalVisible}
         refetch={refetch}
         showModal={showModal}

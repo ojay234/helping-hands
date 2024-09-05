@@ -1,13 +1,25 @@
 import { ErrorMessage, Field } from "formik";
 import styled from "styled-components";
 
-function CustomSelect({ name, label, placeholder, options, icon: Icon }) {
+function CustomSelect({
+  name,
+  label,
+  placeholder,
+  options,
+  icon: Icon,
+  disabled,
+}) {
   return (
     <StyledInputContainer icon={Icon} className="flex flex-col gap-1">
       <label>{label}</label>
       <div className="input-container">
         {Icon && <IconContainer>{<Icon size="1.2rem" />}</IconContainer>}
-        <Field as="select" name={name} placeholder={placeholder}>
+        <Field
+          as="select"
+          name={name}
+          placeholder={placeholder}
+          disabled={disabled}
+        >
           {options.map((option, index) => (
             <option key={index} value={option.value}>
               {option.label}
@@ -27,7 +39,6 @@ const StyledInputContainer = styled.div`
     font-size: 16px;
     font-weight: 700;
     color: #818181;
-   
   }
 
   .input-container {

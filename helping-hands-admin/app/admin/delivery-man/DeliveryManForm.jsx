@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useCreateDeliveryManMutation } from "@/app/api/apiSlice";
+import {
+  useCreateDeliveryManMutation,
+  useUpdateDeliveryManMutation,
+} from "@/app/api/apiSlice";
 
 import CustomButton from "@/app/components/common/custom-button";
 import { deliveryManStatusCategory } from "@/app/data";
@@ -22,16 +25,6 @@ const initialValues = {
   deliveryman_password: "",
 };
 
-const deliveryManValidationSchema = Yup.object().shape({
-  deliveryman_name: Yup.string().required("Required"),
-  deliveryman_phone_number: Yup.string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("Required"),
-  deliveryman_email_address: Yup.string().required("Required"),
-  deliveryman_status: Yup.string().required("Required"),
-  deliveryman_password: Yup.string().required("Required"),
-});
-
 function DeliveryManForm({
   setPageIndex,
   refetch,
@@ -39,7 +32,17 @@ function DeliveryManForm({
   setModalVisible,
   showModal,
   handleCancel,
+  editDetails = null,
 }) {
+  const deliveryManValidationSchema = Yup.object().shape({
+    deliveryman_name: Yup.string().required("Required"),
+    deliveryman_phone_number: Yup.string()
+      .matches(phoneRegExp, "Phone number is not valid")
+      .required("Required"),
+    deliveryman_email_address: Yup.string().required("Required"),
+    deliveryman_status: Yup.string().required("Required"),
+    deliveryman_password: !editDetails && Yup.string().required("Required"),
+  });
   const [
     createDeliveryMan,
     {
@@ -48,39 +51,79 @@ function DeliveryManForm({
     },
   ] = useCreateDeliveryManMutation();
 
+  const [
+    updateDeliveryMan,
+    {
+      isLoading: isUpdateDeliveryManLoading,
+      isError: isUpdateDeliveryManError,
+    },
+  ] = useUpdateDeliveryManMutation();
+
   const refetchData = () => {
     refetch();
   };
 
   const submitDeliveryMan = async (values) => {
-    try {
-      const response = await createDeliveryMan(values);
-      if (response?.data?.status) {
-        setModalVisible(false);
-        refetchData();
-        setPageIndex(1);
-        toast(
-          <span className="text-green-500">
-            Delivery Man created sucessfully
-          </span>,
-          {
-            hideProgressBar: true,
-            position: "top-center",
-          }
-        );
-      } else {
-        toast(
-          <span className="text-red-500">
-            {response?.error?.data?.message || "Something went wrong"}{" "}
-          </span>,
-          {
-            hideProgressBar: true,
-            position: "top-center",
-          }
-        );
+    if (editDetails) {
+      try {
+        const response = await updateDeliveryMan(values);
+        if (response?.data?.status) {
+          setModalVisible(false);
+          refetchData();
+          setPageIndex(1);
+          toast(
+            <span className="text-green-500">
+              Delivery Man updated sucessfully
+            </span>,
+            {
+              hideProgressBar: true,
+              position: "top-center",
+            }
+          );
+        } else {
+          toast(
+            <span className="text-red-500">
+              {response?.error?.data?.message || "Something went wrong"}{" "}
+            </span>,
+            {
+              hideProgressBar: true,
+              position: "top-center",
+            }
+          );
+        }
+      } catch (err) {
+        console.log({ err });
       }
-    } catch (err) {
-      console.log({ err });
+    } else {
+      try {
+        const response = await createDeliveryMan(values);
+        if (response?.data?.status) {
+          setModalVisible(false);
+          refetchData();
+          setPageIndex(1);
+          toast(
+            <span className="text-green-500">
+              Delivery Man created sucessfully
+            </span>,
+            {
+              hideProgressBar: true,
+              position: "top-center",
+            }
+          );
+        } else {
+          toast(
+            <span className="text-red-500">
+              {response?.error?.data?.message || "Something went wrong"}{" "}
+            </span>,
+            {
+              hideProgressBar: true,
+              position: "top-center",
+            }
+          );
+        }
+      } catch (err) {
+        console.log({ err });
+      }
     }
   };
 
@@ -94,11 +137,11 @@ function DeliveryManForm({
         width={650}
       >
         <Formik
-          initialValues={initialValues}
+          initialValues={editDetails || initialValues}
           validationSchema={deliveryManValidationSchema}
           onSubmit={submitDeliveryMan}
         >
-          {({ isValid }) => (
+          {({ isValid, dirty }) => (
             <Form>
               <div className="flex  flex-wrap items-center justify-between gap-3 w-full">
                 <div className="w-[45%]">
@@ -130,16 +173,19 @@ function DeliveryManForm({
                     label="Status"
                     name="deliveryman_status"
                     options={deliveryManStatusCategory}
+                    disabled={editDetails}
                   />
                 </div>
-                <div className="w-[45%]">
-                  <CustomInput
-                    label="Password"
-                    placeholder="Password"
-                    type="password"
-                    name="deliveryman_password"
-                  />
-                </div>
+                {!editDetails && (
+                  <div className="w-[45%]">
+                    <CustomInput
+                      label="Password"
+                      placeholder="Password"
+                      type="password"
+                      name="deliveryman_password"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="max-w-[200px] my-8 mx-auto">
@@ -148,7 +194,7 @@ function DeliveryManForm({
                   clicked={showModal}
                   type="submit"
                   isLoading={isCreateDeliveryManLoading}
-                  disabled={!isValid || isCreateDeliveryManLoading}
+                  disabled={!isValid || !dirty || isCreateDeliveryManLoading}
                 >
                   Submit
                 </CustomButton>

@@ -5,7 +5,7 @@ import Table from "@components/common/Table";
 import { formatDate, formatStatusOrder } from "../../common/table-items";
 import { deliveryManOrderColumn } from "@/app/data";
 
-function DeliveryManOrderDetailsTable({ data, isLoading }) {
+function DeliveryManOrderDetailsTable({ data, isLoading, onPageChange}) {
   const orders = data?.data;
 
   const rowData = useMemo(() => {
@@ -27,6 +27,9 @@ function DeliveryManOrderDetailsTable({ data, isLoading }) {
         data={rowData || []}
         styledHeader
         isLoading={isLoading}
+        pagination
+        paginationData={data?.meta}
+        onPageChange={onPageChange}
       />
     </div>
   );

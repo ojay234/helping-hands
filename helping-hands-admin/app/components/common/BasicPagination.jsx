@@ -59,7 +59,7 @@ const BasicPagination = ({ paginationData, onPageChange }) => {
     return (
       <li
         key={pageNumber}
-        className={`page-num ${
+        className={`page-num cursor-pointer ${
           current_page === pageNumber ? "active-page-num" : ""
         }`}
       >
