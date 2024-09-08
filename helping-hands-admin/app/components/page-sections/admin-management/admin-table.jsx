@@ -38,7 +38,6 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
     if (cell.Header === "Action") {
       event.stopPropagation();
     }
-    console.log("running");
   };
 
   const handleRowClick = (row) => {
@@ -52,7 +51,7 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
         status: row.status === 1 ? "active" : "inactive",
       },
     });
-    console.log("why ");
+
     setModalVisible(true);
   };
 
@@ -72,7 +71,7 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
       <CreateAdminForm
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        refetch={refetch}
+        refetch={refetchData}
         showModal={showModal}
         handleCancel={handleCancel}
         onPageChange={onPageChange}

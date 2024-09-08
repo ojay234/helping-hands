@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Modal } from "antd";
-import deleteIcon from "@assets/icon/trash.svg";
-import Image from "next/image";
 import { useAdminAccessMutation } from "@/app/api/apiSlice";
 import { toast } from "react-toastify";
 
@@ -26,7 +24,6 @@ function TableAction({ adminItem, refetch }) {
     };
     try {
       const response = await adminAccess(body);
-      handleCancel();
       if (response?.data?.status) {
         toast(
           <span className="text-green-500">access removed successfully</span>,
@@ -35,11 +32,17 @@ function TableAction({ adminItem, refetch }) {
             position: "top-center",
           }
         );
+        handleCancel();
       } else {
-        toast(<span className="text-red-500">Something went wrong</span>, {
-          hideProgressBar: true,
-          position: "top-center",
-        });
+        toast(
+          <span className="text-red-500">
+            {response?.error?.data?.message || "Something went wrong"}
+          </span>,
+          {
+            hideProgressBar: true,
+            position: "top-center",
+          }
+        );
       }
     } catch {}
     refetch();
