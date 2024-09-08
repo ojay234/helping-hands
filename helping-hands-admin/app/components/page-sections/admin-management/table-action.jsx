@@ -7,15 +7,15 @@ import { useAdminAccessMutation } from "@/app/api/apiSlice";
 import { toast } from "react-toastify";
 
 function TableAction({ adminItem, refetch }) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalAccessVisible, setModalAccessVisible] = useState(false);
   const [adminAccess, { isLoading }] = useAdminAccessMutation();
 
-  function showModal() {
-    setModalVisible(true);
+  function showAccessModal() {
+    setModalAccessVisible(true);
   }
 
-  const handleCancel = () => {
-    setModalVisible(false);
+  const handleAccessCancel = () => {
+    setModalAccessVisible(false);
   };
 
   const toggleAccess = async () => {
@@ -50,12 +50,17 @@ function TableAction({ adminItem, refetch }) {
       <div className="flex items-center gap-3 w-fit mx-auto">
         <button
           className=" p-1 px-2 rounded-lg text-yellow_500 border-2 border-yellow_500 text-sm"
-          onClick={showModal}
+          onClick={showAccessModal}
         >
           {adminItem?.status === "1" ? "Remove Access" : "Give Access"}
         </button>
       </div>
-      <Modal open={modalVisible} onCancel={handleCancel} footer={null} centered>
+      <Modal
+        open={modalAccessVisible}
+        onCancel={handleAccessCancel}
+        footer={null}
+        centered
+      >
         <div className="flex flex-col gap-3">
           <p className="text-center">
             {`  Are you sure you want ${
@@ -65,7 +70,7 @@ function TableAction({ adminItem, refetch }) {
           <div className="flex gap-4  mx-auto w-fit">
             <button
               className="bg-blue_400 p-1 px-4 rounded-lg text-white"
-              onClick={handleCancel}
+              onClick={handleAccessCancel}
             >
               No
             </button>

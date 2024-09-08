@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import styled from "styled-components";
 import logo from "@assets/icon/logo.svg";
@@ -16,6 +16,7 @@ import walletActiveIcon from "@assets/icon/wallet-active.svg";
 import supportIcon from "@assets/icon/support.svg";
 import supportActiveIcon from "@assets/icon/support-active.svg";
 import Link from "next/link";
+import { IoMdLogOut } from "react-icons/io";
 
 const menuItems = [
   {
@@ -64,6 +65,12 @@ const menuItems = [
 
 function Sidebar() {
   const currentRoute = usePathname();
+  const router = useRouter();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("auth_token");
+    router.push("/");
+  };
 
   return (
     <SidebarContainer className="bg-blue_400 h-screen flex flex-col w-[18vw] fixed">
@@ -78,7 +85,7 @@ function Sidebar() {
               currentRoute.includes(item.path)
                 ? "bg-blue_800"
                 : "bg-transparent "
-            } text-white rounded-lg my-2`}
+            } text-white rounded-lg my-2 hover:bg-[#4467A6]`}
           >
             <Link
               href={item.path}
@@ -104,6 +111,15 @@ function Sidebar() {
             </Link>
           </li>
         ))}
+        <li
+          className="text-white rounded-lg my-1 py-2 px-3 flex items-center gap-2 hover:bg-[#4467A6] cursor-pointer"
+          onClick={() => logoutHandler()}
+        >
+          <span>
+            <IoMdLogOut size="1.4rem" />
+          </span>
+          <span>Log out</span>
+        </li>
       </ul>
     </SidebarContainer>
   );

@@ -34,6 +34,13 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
     }));
   }, [data]);
 
+  const handleCellClick = (cell, event) => {
+    if (cell.Header === "Action") {
+      event.stopPropagation();
+    }
+    console.log("running");
+  };
+
   const handleRowClick = (row) => {
     setEditDetails({
       adminId: row.id,
@@ -45,6 +52,7 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
         status: row.status === 1 ? "active" : "inactive",
       },
     });
+    console.log("why ");
     setModalVisible(true);
   };
 
@@ -59,6 +67,7 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
         onPageChange={onPageChange}
         isLoading={isLoading}
         onRowClick={handleRowClick}
+        onCellClick={handleCellClick}
       />
       <CreateAdminForm
         modalVisible={modalVisible}
@@ -68,6 +77,7 @@ function ManagementTable({ data, isLoading, refetch, onPageChange }) {
         handleCancel={handleCancel}
         onPageChange={onPageChange}
         editDetails={editDetails}
+        onCellClick={handleCellClick}
       />
     </div>
   );
