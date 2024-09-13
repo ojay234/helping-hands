@@ -150,7 +150,7 @@ const api = createApi({
     }),
     getHomeStatistic: builder.query({
       query: () => ({
-        url: `/v1/business/home/statistics`,
+        url: `/v1/admin/home/statistics`,
         method: "GET",
       }),
     }),

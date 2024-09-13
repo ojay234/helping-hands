@@ -75,9 +75,9 @@ function Login() {
                 iconClicked={() => setHidePassword(!hidePassword)}
               />
               <div className="my-3">
-                <div className="flex gap-1">
+                <div className="flex gap-2 items-center">
                   <Field type="checkbox" name="remember" id="remember" />
-                  <label htmlFor="remember">Remember</label>
+                  <label htmlFor="remember">Remember me</label>
                 </div>
               </div>
               {isError && (
@@ -105,13 +105,16 @@ const LoginContainer = styled.section`
   display: flex;
   flex-direction: column;
 
-  padding: 8% 25px 0 25px;
+  padding: 20% 25px 0 25px;
 
   h1 {
     text-align: center;
     font-weight: 700;
     font-size: 22px;
     margin: 20px 0;
+  }
+  @media screen and (min-width: 768px) {
+    padding: 8% 25px 0 25px;
   }
 `;
 
