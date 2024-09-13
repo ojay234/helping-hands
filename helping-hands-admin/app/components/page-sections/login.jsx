@@ -50,7 +50,7 @@ function Login() {
 
   return (
     <LoginContainer>
-      <h1>Welcome Back</h1>
+      <h1>Login</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -104,7 +104,8 @@ const LoginContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-top: 60px;
+  justify-content: center;
+  padding: 0 25px;
   h1 {
     text-align: center;
     font-weight: 700;
