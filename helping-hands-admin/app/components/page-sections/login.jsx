@@ -104,8 +104,9 @@ const LoginContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 0 25px;
+
+  padding: 8% 25px 0 25px;
+
   h1 {
     text-align: center;
     font-weight: 700;
