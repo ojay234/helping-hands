@@ -9,6 +9,7 @@ const BasicPagination = ({ paginationData, onPageChange }) => {
   const { current_page, last_page, links } = paginationData || {};
 
   const handlePageChange = (pageNumber) => {
+
     onPageChange(pageNumber);
     window.scrollTo(0, 0);
   };

@@ -100,7 +100,7 @@ const FilterContainer = styled.form`
     border-radius: 6px;
     padding: 8px;
     outline: none;
-    color: #cdcdcd;
+    color: #000000;
     max-width: 130px;
     font-size: 14px;
   }

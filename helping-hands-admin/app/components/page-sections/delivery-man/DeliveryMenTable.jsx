@@ -5,9 +5,11 @@ import { deliveryMenColumn } from "@/app/data";
 import { FaStar } from "react-icons/fa";
 import { useChangeDeliveryManStatusMutation } from "@/app/api/apiSlice";
 import { toast } from "react-toastify";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function DeliveryMenTable({ data, isLoading, onPageChange, refetch }) {
   const router = useRouter();
+  const { deliveryMenyPageIndex } = useAppQueryState();
 
   const [changeDeliveryManStatus, { isLoading: isStatusChangeLoading }] =
     useChangeDeliveryManStatusMutation();
@@ -43,7 +45,6 @@ function DeliveryMenTable({ data, isLoading, onPageChange, refetch }) {
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       id: item.id,
-      role: item.role,
       name: item.name,
       email: item.emailAddress,
       phone: item.phoneNumber,
@@ -69,7 +70,9 @@ function DeliveryMenTable({ data, isLoading, onPageChange, refetch }) {
   }, [data]);
 
   const handleRowClick = (row) => {
-    router.push(`/admin/delivery-man/${row.id}`);
+    router.push(
+      `/admin/delivery-man/${row.id}?deliveryMenPage=${deliveryMenyPageIndex}`
+    );
   };
 
   const handleCellClick = (cell, event) => {

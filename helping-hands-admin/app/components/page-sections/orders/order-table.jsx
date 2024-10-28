@@ -4,12 +4,12 @@ import Table from "@components/common/Table";
 import { useGetOrderDataQuery } from "@/app/api/apiSlice";
 import { orderColumns } from "@/app/data";
 import { formatDate, formatStatusOrder } from "../../common/table-items";
-import DeleteAction from "./table-action";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
-function OrderTable({data, isLoading, onPageChange}) {
+function OrderTable({ data, isLoading, onPageChange }) {
+  const { orderPageIndex } = useAppQueryState();
 
   const router = useRouter();
-
 
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
@@ -21,9 +21,10 @@ function OrderTable({data, isLoading, onPageChange}) {
     }));
   }, [data]);
 
-
   const handleRowClick = (row) => {
-    router.push(`/admin/orders/details?orderId=${row.order_id}`);
+    router.push(
+      `/admin/orders/details?orderId=${row.order_id}&orderPage=${orderPageIndex}`
+    );
   };
 
   return (

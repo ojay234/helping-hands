@@ -12,9 +12,11 @@ import { useEffect, useState } from "react";
 import DeliveryManOrderDetailsTable from "@/app/components/page-sections/delivery-man/DeliveryManOrderTable";
 import { FaStar } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
-import { MdDelete, MdDeleteOutline } from "react-icons/md";
+
+import { MdDeleteOutline } from "react-icons/md";
 import DeliveryManForm from "../DeliveryManForm";
 import DeleteDeliveryMan from "../DeleteDeliveryMan";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function DeliveryManOrderDetails() {
   const router = useRouter();
@@ -23,6 +25,7 @@ function DeliveryManOrderDetails() {
   const [editDetails, setEditDetails] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const { deliveryMenyPageIndex } = useAppQueryState();
 
   const { data, isLoading, isError } = useGetDeliveryManOrdersQuery(id);
   const {
@@ -74,65 +77,79 @@ function DeliveryManOrderDetails() {
     showEditModal();
   };
 
-  console.log({ data });
+  const navigationHandler = () => {
+    router.push(`/admin/delivery-man?deliveryMenPage=${deliveryMenyPageIndex}`);
+  };
+
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 ">
       <Header title="Delivery Man" />
       {deliveryManDetails?.data && (
-        <div className="w-[60%] flex  bg-white rounded-md my-4 p-3 gap-4">
-          <div className="w-24 h-24">
-            <img src={avatar} alt="" className="w-full h-full object-contain" />
+        <div className="w-[60%] bg-white">
+          <div className="mt-1  mx-2 text-gray-600  p-1 w-fit cursor-pointer border rounded-md hover:border-gray-800 ">
+            <p onClick={navigationHandler}>
+              <IoIosArrowRoundBack size="1.2rem" />
+            </p>
           </div>
-          <div>
-            <div className="flex gap-4">
-              <p>
-                <span className="text-gray-500">Name:</span> {name}
-              </p>
-              <p>
-                <span className="text-gray-500">Role:</span> {role}
-              </p>
+          <div className=" flex   rounded-md   p-3 gap-4">
+            <div className="w-24 h-24">
+              <img
+                src={avatar}
+                alt=""
+                className="w-full h-full object-contain"
+              />
             </div>
-            <div className="flex gap-4">
-              <p>
-                <span className="text-gray-500">Email:</span> {emailAddress}
-              </p>
-              <p>
-                <span className="text-gray-500">Phone:</span> {phoneNumber}
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <p className="flex gap-4">
-                <span className="text-gray-500">Rating:</span>
-                <span className="flex items-center m-auto w-fit text-xs  gap-1">
-                  {Array.from({ length: rating }, (_, i) => (
-                    <FaStar key={i} color="#ffd700" />
-                  ))}
-                </span>
-              </p>
-              <p>
-                <span className="text-gray-500">Status:</span>{" "}
-                <span
-                  className={`font-bold ${
-                    status === "active" ? "text-green-500" : "text-red-500"
-                  }`}
+            <div>
+              <div className="flex gap-4">
+                <p>
+                  <span className="text-gray-500">Name:</span> {name}
+                </p>
+                <p>
+                  <span className="text-gray-500">Role:</span> {role}
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <p>
+                  <span className="text-gray-500">Email:</span> {emailAddress}
+                </p>
+                <p>
+                  <span className="text-gray-500">Phone:</span> {phoneNumber}
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <p className="flex gap-4">
+                  <span className="text-gray-500">Rating:</span>
+                  <span className="flex items-center m-auto w-fit text-xs  gap-1">
+                    {Array.from({ length: rating }, (_, i) => (
+                      <FaStar key={i} color="#ffd700" />
+                    ))}
+                  </span>
+                </p>
+                <p>
+                  <span className="text-gray-500">Status:</span>{" "}
+                  <span
+                    className={`font-bold ${
+                      status === "active" ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    {status}
+                  </span>
+                </p>
+              </div>
+              <div className="my-1 flex gap-1 items-center">
+                <button
+                  className="hover:border-2 border-gray-500 rounded-md p-1 text-gray-500"
+                  onClick={() => editDetailsHandler()}
                 >
-                  {status}
-                </span>
-              </p>
-            </div>
-            <div className="my-1 flex gap-1 items-center">
-              <button
-                className="hover:border-2 border-gray-500 rounded-md p-1 text-gray-500"
-                onClick={() => editDetailsHandler()}
-              >
-                <FiEdit size="1.2rem" />
-              </button>
-              <button
-                className="hover:border-2 border-red-500 rounded-md p-1 text-red-500"
-                onClick={() => showDeleteModal()}
-              >
-                <MdDeleteOutline size="1.2rem" />
-              </button>
+                  <FiEdit size="1.2rem" />
+                </button>
+                <button
+                  className="hover:border-2 border-red-500 rounded-md p-1 text-red-500"
+                  onClick={() => showDeleteModal()}
+                >
+                  <MdDeleteOutline size="1.2rem" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

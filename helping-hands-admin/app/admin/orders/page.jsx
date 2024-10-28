@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useGetOrderDataQuery } from "@/app/api/apiSlice";
 import Header from "@components/page-sections/header";
 import OrderTable from "@components/page-sections/orders/order-table";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function Orders() {
   const [filter, setFilter] = useState("");
-  const [pageIndex, setPageIndex] = useState(1);
+  const { orderPageIndex, setOrderPageIndex } = useAppQueryState();
+
   const { data, isLoading, isError, refetch } = useGetOrderDataQuery({
-    pageIndex,
+    pageIndex: orderPageIndex,
     filter,
   });
 
@@ -21,7 +23,7 @@ function Orders() {
   }, []);
 
   const onPageChange = (label) => {
-    setPageIndex(label);
+    setOrderPageIndex(label);
   };
   return (
     <section className="flex flex-col w-[92%] mx-auto gap-4 py-6">

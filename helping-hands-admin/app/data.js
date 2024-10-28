@@ -625,10 +625,6 @@ export const deliveryMenColumn = [
     accessor: "id",
   },
   {
-    Header: "Role",
-    accessor: "role",
-  },
-  {
     Header: "Name",
     accessor: "name",
   },
