@@ -10,13 +10,14 @@ import CustomButton from "@/app/components/common/custom-button";
 import { deliveryManStatusCategory } from "@/app/data";
 import { Formik } from "formik";
 import DeliveryManForm from "./DeliveryManForm";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function DeliveryMan() {
   const [filter, setFilter] = useState("");
-  const [pageIndex, setPageIndex] = useState(1);
+  const { deliveryMenyPageIndex, setDeliveryMenPageIndex } = useAppQueryState();
   const [modalVisible, setModalVisible] = useState(false);
   const { data, isLoading, isError, refetch } = useGetDeliveryMenQuery({
-    pageIndex,
+    pageIndex: deliveryMenyPageIndex,
     filter,
   });
 
@@ -58,7 +59,7 @@ function DeliveryMan() {
       </div>
       <DeliveryManForm
         modalVisible={modalVisible}
-        setPageIndex={setPageIndex}
+        setPageIndex={setDeliveryMenPageIndex}
         setModalVisible={setModalVisible}
         refetch={refetch}
         showModal={showModal}

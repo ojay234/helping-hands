@@ -1,13 +1,15 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Table from "@components/common/Table";
-import { customersColumns, customersData } from "@/app/data";
+import { customersColumns } from "@/app/data";
 import DeleteAction from "./table-actions";
-
 import { formatDate } from "../../common/table-items";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function CustomersTable({ data, isLoading, onPageChange, refetchData }) {
   const router = useRouter();
+  const { customerPageIndex } = useAppQueryState();
+
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       user_id: item.userId,
@@ -27,7 +29,7 @@ function CustomersTable({ data, isLoading, onPageChange, refetchData }) {
 
   const handleRowClick = (row) => {
     router.push(
-      `/admin/customers/orders?userId=${row.user_id}&userName=${row.name}`
+      `/admin/customers/orders?userId=${row.user_id}&userName=${row.name}&customerPage=${customerPageIndex}`
     );
   };
 

@@ -3,17 +3,18 @@ import Header from "@components/page-sections/header";
 import CustomersTable from "@/app/components/page-sections/customers/customers-table";
 import { useGetCustomerDataQuery } from "@/app/api/apiSlice";
 import { useState } from "react";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function Customers() {
-  const [pageIndex, setPageIndex] = useState(1);
+  const { customerPageIndex, setCustomerPageIndex } = useAppQueryState();
   const [filter, setFilter] = useState("");
   const { data, isLoading, refetch } = useGetCustomerDataQuery({
-    pageIndex,
+    pageIndex: customerPageIndex,
     filter,
   });
 
   const onPageChange = (label) => {
-    setPageIndex(label);
+    setCustomerPageIndex(label);
   };
   const refetchData = () => {
     refetch();

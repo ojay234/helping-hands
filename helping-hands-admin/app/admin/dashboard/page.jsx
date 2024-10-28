@@ -50,9 +50,14 @@ function Dashboard() {
             rowData={data?.data?.orderStatistic.summary}
             isLoading={dashboardDataLoading}
           />
-          <Link href="/admin/orders" className="text-right underline mx-3 my-2">
-            View all
-          </Link>
+          {data?.data && (
+            <Link
+              href="/admin/orders"
+              className="text-right underline mx-3 my-2"
+            >
+              View all
+            </Link>
+          )}
         </div>
       </div>
       <div className="custom-shadow  ">

@@ -12,13 +12,17 @@ import OrderDetailsTable from "@/app/components/page-sections/orders/order-detai
 import CustomButton from "@/app/components/common/custom-button";
 import { Modal } from "antd";
 import AssignableDeliveryMenTable from "@/app/components/page-sections/delivery-man/AssignableDeliveryMenTable";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function OrderDetails() {
   const router = useRouter();
   const [pageIndex, setPageIndex] = useState(1);
+  const { orderPageIndex, setOrderPageIndex } = useAppQueryState();
   const [modalVisible, setModalVisible] = useState(false);
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
+
+  console.log({ orderPageIndex });
 
   useEffect(() => {
     if (!orderId) {
@@ -40,7 +44,7 @@ function OrderDetails() {
   const { orderCustomer, orderAssignStatus } = data?.data || {};
 
   const handleRowClick = () => {
-    router.push(`/admin/orders`);
+    router.push(`/admin/orders?orderPage=${orderPageIndex}`);
   };
 
   const onPageChange = (label) => {

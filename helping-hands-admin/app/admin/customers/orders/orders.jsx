@@ -4,17 +4,19 @@ import CustomerTable from "@/app/components/page-sections/customers/customer-ord
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useGetCustomerOrdersQuery } from "@/app/api/apiSlice";
 import { useEffect } from "react";
+import { useAppQueryState } from "@/app/hooks/useAppQueryState";
 
 function Orders() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
   const userName = searchParams.get("userName");
+  const { customerPageIndex } = useAppQueryState();
 
   const { data, isLoading } = useGetCustomerOrdersQuery(userId);
 
   const handleRowClick = () => {
-    router.push(`/admin/customers`);
+    router.push(`/admin/customers?customerPage=${customerPageIndex}`);
   };
 
   useEffect(() => {
