@@ -44,12 +44,6 @@ const menuItems = [
     path: "/admin/management",
   },
   {
-    title: "Payment History",
-    icon: walletIcon,
-    activeIcon: walletActiveIcon,
-    path: "/admin/payment-history",
-  },
-  {
     title: "Support",
     icon: supportIcon,
     activeIcon: supportActiveIcon,

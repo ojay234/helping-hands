@@ -14,7 +14,7 @@ function OrderTable({ data, isLoading, onPageChange }) {
   const rowData = useMemo(() => {
     return data?.data?.map((item, index) => ({
       order_id: item.orderId,
-      order_title: item.orderTitle,
+      order_title: item.orderTitle || "N/A",
       date: formatDate(item.orderDate),
       order_number: item.orderNumber,
       order_cost: item.orderCost,
